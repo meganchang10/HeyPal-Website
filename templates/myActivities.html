@@ -1,0 +1,82 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+  <div class="row divider blue">
+    <div class="col-md-12"></div>
+  </div>
+
+  <div class="row banner main">
+    <div class="col-md-3 padding-mini">
+      <h1>HeyPal</h1>
+    </div>
+    <div class="col-md-6 padding-mini">
+      <h2 class = "text-center">{{session['username']}}</h2>
+    </div>
+  </div>
+
+  <div class="row divider blue">
+    <div class="col-md-12"></div>
+  </div>
+
+<!-- FLASH CODE  -->
+  <div class = 'flash'>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+<!-- FLASH CODE  -->
+
+  <div class="row padding-top padding-bottom">
+    <div class="col-md-3 padding-mini">
+      <a href="{{url_for('newMyActivity',user_id=user_id)}}">
+        <button class="btn btn-default" id="new-my-activity">
+        <span class="glyphicon glyphicon-plus"></span>Add Activity
+        </button>
+      </a>
+    </div>
+    <div class="col-md-6">
+      <span class="text-center"><h1>{{title}}</h1></span>
+    </div>
+    <div class="col-md-3">
+      <form name="filter_results" method='POST'>
+
+        <label for="tags">Filter Results:</label><br>
+        <select name="filter_results">
+
+          {% for tag in tags %}
+          <option value= "{{tag}}" {% if title == "tag" %}selected {% endif %}>{{tag}}</option>
+          {% endfor %}
+
+        </select>
+
+
+        <button type="submit">Filter</button>
+
+    </form>
+    </div>
+  </div>
+
+  {% for myActivity in myActivities %}
+
+    <article class="col-md-4 btn-default">
+      <a href="{{url_for('showMyActivity', myActivity_id = myActivity.id, user_id=user_id)}}">
+        <img src="{{myActivity.image}}" class="img-responsive activity-clip" alt="{{myActivity.name}} Image" >
+        <h4>{{myActivity.name}} @ {{myActivity.location}}</h4>
+      </a>
+    </article>
+
+
+  {% endfor %}
+
+  <!-- ENDS here  -->
+
+{% endblock %}
+Contact GitHub API Training Shop Blog About

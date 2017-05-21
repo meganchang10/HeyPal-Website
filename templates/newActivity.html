@@ -1,0 +1,59 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+  <div class="row divider green">
+    <div class="col-md-12"></div>
+  </div>
+  <div class="row banner menu">
+    <div class="col-md-11 col-md-offset-1 padding-none">
+      <h1>New Activity</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-md-offset-1 padding-top">
+
+      <!-- The form allows us to receive input assigned to the value name -->
+      <form action="#" method = "POST">
+        <div class="form-group">
+
+          <label for="name">Name:</label>
+          <input type ="text" maxlength="50" class="form-control" name="name" placeholder="Name of the activity">
+
+          <p></p>
+
+          <label for="location">Location:</label>
+          <input type ="text" maxlength="50" class="form-control" name="location" placeholder="Location of the activity">
+
+          <p></p>
+
+          <label for="image">Image:</label>
+          <input type ="text" maxlength="250" class="form-control" name="image" placeholder="Image of the activity in url format (http://www.image.jpg)">
+
+          <p></p>
+
+          <label for="description">Description:</label>
+          <textarea class="form-control" maxlength="250" rows="3" name="description" placeholder="Description of the activity (only if necessary)"></textarea>
+
+          <p></p>
+
+          <label for="tags">Tags:</label><br>
+
+          <input type="checkbox" name="tag_free" value="yes"> Free<br>
+          <input type="checkbox" name="tag_sporty" value="yes"> Sporty<br>
+          <input type="checkbox" name="tag_outdoor" value="yes"> Outdoors<br>
+          <input type="checkbox" name="tag_special" value="yes"> Special Occasions!<br>
+          <input type="checkbox" name="tag_learn" value="yes"> Better Yourself<br>
+          <input type="checkbox" name="tag_date_night" value="yes"> Date Night<br>
+
+          <p></p>
+
+          <button type="submit" class="btn btn-default" id="submit" type="submit">
+          <!-- A glyphicon is part of the bootstrap css package that includes 260 "glyphs" or icons like a music note or trash can for delete -->
+          <span class="glyphicon glyphicon-flash"></span>Create</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

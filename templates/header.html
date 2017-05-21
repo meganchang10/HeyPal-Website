@@ -1,0 +1,20 @@
+<div class="row top-menu">
+  <div class="col-md-6">
+    <a href="{{url_for('showActivities')}}">
+      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>Show All Activities
+    </a> <span>&nbsp;&nbsp;</span>
+    <a href="{{url_for('showMyActivitiesRedirect')}}">
+      <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Show My Activities
+    </a>
+
+  </div>
+  <div class="col-md-6 text-right">
+      {%if 'username' not in session %}
+      <a href="{{url_for('showLogin')}}">Click Here to Login </a>
+      {% else %}
+      <a href="{{url_for('disconnect')}}">Logout </a>
+      {% endif %}
+
+  </div>
+</div>
+Contact GitHub API Training Shop Blog About

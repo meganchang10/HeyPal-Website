@@ -1,0 +1,70 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+  <div class="row divider blue">
+    <div class="col-md-12"></div>
+  </div>
+  <div class="row banner main">
+    <div class="col-md-12 padding-mini">
+      <h1>HeyPal</h1>
+    </div>
+  </div>
+
+<!-- FLASH CODE  -->
+<div class = 'flash'>
+          {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+<!-- FLASH CODE  -->
+
+</div>
+  <div class="row padding-top padding-bottom">
+    <div class="col-md-12 padding-mini">
+
+        <a href="{{url_for('editMyActivity', myActivity_id = current.id, user_id = user_id)}}">
+          <button class="btn btn-default" id="edit-my-activity">
+          <span class="glyphicon glyphicon-pencil"></span>Edit Activity
+          </button>
+        </a>
+
+        <a href="{{url_for('deleteMyActivity',myActivity_id = current.id,user_id = user_id)}}">
+          <button class="btn btn-default" id="delete-my-activity">
+          <span class="glyphicon glyphicon-trash"></span>Delete Activity
+          </button>
+        </a>
+
+    </div>
+  </div>
+
+
+<!-- Just one activity  -->
+
+    <article class="col-md-12">
+        <h1>{{current.name}} @ {{current.location}}</h1>
+
+        <h4>Current Tags:</h4>
+        {% if current.tag_free == "yes"%} Free <br>{% endif %}
+        {% if current.tag_sporty == "yes"%} Sporty<br>{% endif %}
+        {% if current.tag_outdoor == "yes"%} Outdoors<br> {% endif %}
+        {% if current.tag_special == "yes"%} Special Occasions<br> {% endif %}
+        {% if current.tag_learn == "yes"%} Better Yourself<br> {% endif %}
+        {% if current.tag_date_night == "yes"%} Date Night<br> {% endif %}
+
+        <img src="{{current.image}}" class="img-responsive" alt="{{current.name}} Image">
+    </article>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+
+  <!-- ENDS here  -->
+
+{% endblock %}
