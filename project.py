@@ -151,11 +151,6 @@ def gconnect():
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
 
-    # h = httplib2.Http()
-    # bytes_content = h.request(url, 'GET')[1]
-    # str_content = bytes_content.decode('utf-8')
-    # result = json.loads(str_content)
-
     # If there was an error in the access token info, abort.
     if result.get('error') is not None:
         response = make_response(json.dumps(result.get('error')), 500)
@@ -217,8 +212,8 @@ def gconnect():
     output += login_session['picture']
     output += ''' "style = "width: 300px; height: 300px;border-radius: 150px;
     -webkit-border-radius: 150px;-moz-border-radius: 150px;"> '''
-    flash("you are now logged in as %s" % login_session['username'])
-    print "done!"
+    flash("You are now logged in as %s" % login_session['username'])
+    print "Done!"
     return output
 
 
@@ -281,34 +276,60 @@ def gdisconnect():
 @app.route('/heypal/activities/')
 @app.route('/heypal/', methods=["GET", "POST"])
 def showActivities():
-    activities = session.query(Activity).order_by(Activity.log_views.desc()).all()
-    tags = ["All Activities", "Free Activities", "Get Active", "Get Outdoors", "Rainy Day", "Special Occasions", "Better Yourself", "Date Night"]
-    if request.method == "POST":
-        # Check for filters
-        filter_results = request.form.get('filter_results')
-        activities = executeFilter_Activity(filter_results)
-        return render_template('activities.html', activities=activities, tags=tags, title=filter_results)
+    activities = session.query(
+        Activity).order_by(Activity.log_views.desc()).all()
+    tags = ["All Activities", "Free Activities", "Get Active", "Get Outdoors",
+            "Rainy Day", "Special Occasions", "Better Yourself", "Date Night"]
+    if 'username' not in login_session or login_session['user_id'] != 1:
+        return render_template(
+            'publicActivities.html', activities=activities, tags=tags,
+            title="All Activities")
     else:
-        return render_template('activities.html', activities=activities, tags=tags, title="All Activities")
+        if request.method == "POST":
+            # Check for filters
+            filter_results = request.form.get('filter_results')
+            activities = executeFilter_Activity(filter_results)
+            return render_template(
+                'activities.html', activities=activities, tags=tags,
+                title=filter_results)
+        else:
+            return render_template(
+                'activities.html', activities=activities, tags=tags,
+                title="All Activities")
 
 
 def executeFilter_Activity(filter_results):
     if filter_results == "All Activities":
-        activities = session.query(Activity).order_by(Activity.log_views.desc())
+        activities = session.query(
+            Activity).order_by(Activity.log_views.desc())
     elif filter_results == "Free Activities":
-        activities = session.query(Activity).filter_by(tag_free="yes").order_by(Activity.log_views.desc()).all()
+        activities = session.query(
+            Activity).filter_by(tag_free="yes").order_by(
+            Activity.log_views.desc()).all()
     elif filter_results == "Get Active":
-        activities = session.query(Activity).filter_by(tag_sporty="yes").order_by(Activity.log_views.desc()).all()
+        activities = session.query(
+            Activity).filter_by(tag_sporty="yes").order_by(
+            Activity.log_views.desc()).all()
     elif filter_results == "Get Outdoors":
-        activities = session.query(Activity).filter_by(tag_outdoor="yes").order_by(Activity.log_views.desc()).all()
+        activities = session.query(
+            Activity).filter_by(tag_outdoor="yes").order_by(
+            Activity.log_views.desc()).all()
     elif filter_results == "Rainy Day":
-        activities = session.query(Activity).filter_by(tag_outdoor="no").order_by(Activity.log_views.desc()).all()
+        activities = session.query(
+            Activity).filter_by(tag_outdoor="no").order_by(
+            Activity.log_views.desc()).all()
     elif filter_results == "Special Occasions":
-        activities = session.query(Activity).filter_by(tag_special="yes").order_by(Activity.log_views.desc()).all()
+        activities = session.query(
+            Activity).filter_by(tag_special="yes").order_by(
+            Activity.log_views.desc()).all()
     elif filter_results == "Better Yourself":
-        activities = session.query(Activity).filter_by(tag_learn="yes").order_by(Activity.log_views.desc()).all()
+        activities = session.query(
+            Activity).filter_by(tag_learn="yes").order_by(
+            Activity.log_views.desc()).all()
     elif filter_results == "Date Night":
-        activities = session.query(Activity).filter_by(tag_date_night="yes").order_by(Activity.log_views.desc()).all()
+        activities = session.query(
+            Activity).filter_by(tag_date_night="yes").order_by(
+            Activity.log_views.desc()).all()
     return activities
 
 
@@ -316,11 +337,12 @@ def executeFilter_Activity(filter_results):
 def showActivity(activity_id):
     activity = session.query(Activity).filter_by(id=activity_id).one()
     activity.log_views += 1
-    print("Logged Views")
-    print(activity.log_views)
     session.add(activity)
     session.commit()
-    return render_template('activity.html', current=activity)
+    if 'username' not in login_session or login_session['user_id'] != 1:
+        return render_template('publicActivity.html', current=activity)
+    else:
+        return render_template('activity.html', current=activity)
 
 
 # Create a new activity
@@ -331,7 +353,8 @@ def newActivity():
     if request.method == "POST":
 
         # Check tags first
-        [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,tag_date_night] = checkTags(request)
+        [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
+         tag_date_night] = checkTags(request)
 
         newActivity = Activity(
             name=request.form['name'],
@@ -378,7 +401,8 @@ def checkTags(request):
     if not tag_date_night:
         tag_date_night = "no"
 
-    return [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,tag_date_night]
+    return [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
+            tag_date_night]
 
 
 @app.route('/heypal/<int:activity_id>/edit/', methods=["GET", "POST"])
@@ -395,14 +419,15 @@ def editActivity(activity_id):
         if request.form['location']:
             editActivity.location = request.form['location']
 
-        [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,tag_date_night] = checkTags(request)
+        [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
+         tag_date_night] = checkTags(request)
 
-        editActivity.tag_free=tag_free
-        editActivity.tag_sporty=tag_sporty
-        editActivity.tag_outdoor=tag_outdoor
-        editActivity.tag_special=tag_special
-        editActivity.tag_learn=tag_learn
-        editActivity.tag_date_night=tag_date_night
+        editActivity.tag_free = tag_free
+        editActivity.tag_sporty = tag_sporty
+        editActivity.tag_outdoor = tag_outdoor
+        editActivity.tag_special = tag_special
+        editActivity.tag_learn = tag_learn
+        editActivity.tag_date_night = tag_date_night
 
         session.add(editActivity)
         session.commit()
@@ -435,40 +460,55 @@ def showMyActivitiesRedirect():
     if "username" not in login_session:
         return redirect('/login')
     user_id = login_session['user_id']
-    return redirect(url_for('showMyActivities', user_id=user_id, title="My Activities"))
+    return redirect(url_for(
+        'showMyActivities', user_id=user_id, title="My Activities"))
 
 
 @app.route('/heypal/<int:user_id>/myActivities', methods=["GET", "POST"])
 def showMyActivities(user_id):
     myActivities = session.query(MyActivity).filter_by(user_id=user_id).all()
-    tags = ["My Activities", "Free Activities", "Get Active", "Get Outdoors", "Rainy Day", "Special Occasions", "Better Yourself", "Date Night"]
+    tags = ["My Activities", "Free Activities", "Get Active", "Get Outdoors",
+            "Rainy Day", "Special Occasions", "Better Yourself", "Date Night"]
+
     if "username" not in login_session:
         return redirect('/login')
     if request.method == "POST":
         filter_results = request.form.get('filter_results')
         myActivities = executeFilter_myActivity(filter_results, user_id)
-        return render_template("myActivities.html", myActivities=myActivities, tags=tags, user_id=user_id, title=filter_results)
+        return render_template(
+            "myActivities.html", myActivities=myActivities, tags=tags,
+            user_id=user_id, title=filter_results)
     else:
-        return render_template("myActivities.html", myActivities=myActivities, tags=tags, user_id=user_id, title="My Activities")
+        return render_template(
+            "myActivities.html", myActivities=myActivities, tags=tags,
+            user_id=user_id, title="My Activities")
 
 
 def executeFilter_myActivity(filter_results, user_id):
     if filter_results == "My Activities":
-        myActivities = session.query(MyActivity).filter_by(user_id=user_id).all()
+        myActivities = session.query(
+            MyActivity).filter_by(user_id=user_id).all()
     elif filter_results == "Free Activities":
-        myActivities = session.query(MyActivity).filter_by(tag_free="yes", user_id=user_id)
+        myActivities = session.query(
+            MyActivity).filter_by(tag_free="yes", user_id=user_id)
     elif filter_results == "Get Active":
-        myActivities = session.query(MyActivity).filter_by(tag_sporty="yes", user_id=user_id)
+        myActivities = session.query(
+            MyActivity).filter_by(tag_sporty="yes", user_id=user_id)
     elif filter_results == "Get Outdoors":
-        myActivities = session.query(MyActivity).filter_by(tag_outdoor="yes", user_id=user_id)
+        myActivities = session.query(
+            MyActivity).filter_by(tag_outdoor="yes", user_id=user_id)
     elif filter_results == "Rainy Day":
-        myActivities = session.query(MyActivity).filter_by(tag_outdoor="no", user_id=user_id)
+        myActivities = session.query(
+            MyActivity).filter_by(tag_outdoor="no", user_id=user_id)
     elif filter_results == "Special Occasions":
-        myActivities = session.query(MyActivity).filter_by(tag_special="yes", user_id=user_id)
+        myActivities = session.query(
+            MyActivity).filter_by(tag_special="yes", user_id=user_id)
     elif filter_results == "Better Yourself":
-        myActivities = session.query(MyActivity).filter_by(tag_learn="yes", user_id=user_id)
+        myActivities = session.query(
+            MyActivity).filter_by(tag_learn="yes", user_id=user_id)
     elif filter_results == "Date Night":
-        myActivities = session.query(MyActivity).filter_by(tag_date_night="yes", user_id=user_id)
+        myActivities = session.query(
+            MyActivity).filter_by(tag_date_night="yes", user_id=user_id)
     return myActivities
 
 
@@ -526,7 +566,8 @@ def newMyActivity(user_id):
         session.add(newMyActivity)
         flash("New Activity Successfully Created: %s" % newMyActivity.name)
         session.commit()
-        return redirect(url_for('showMyActivities', user_id=user_id, title="My Activities"))
+        return redirect(url_for(
+            'showMyActivities', user_id=user_id, title="My Activities"))
     else:
         return render_template("newMyActivity.html", user_id=user_id)
 
@@ -546,19 +587,21 @@ def editMyActivity(myActivity_id, user_id):
         if request.form['location']:
             editActivity.location = request.form['location']
 
-        [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,tag_date_night] = checkTags(request)
+        [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
+         tag_date_night] = checkTags(request)
 
-        editActivity.tag_free=tag_free
-        editActivity.tag_sporty=tag_sporty
-        editActivity.tag_outdoor=tag_outdoor
-        editActivity.tag_special=tag_special
-        editActivity.tag_learn=tag_learn
-        editActivity.tag_date_night=tag_date_night
+        editActivity.tag_free = tag_free
+        editActivity.tag_sporty = tag_sporty
+        editActivity.tag_outdoor = tag_outdoor
+        editActivity.tag_special = tag_special
+        editActivity.tag_learn = tag_learn
+        editActivity.tag_date_night = tag_date_night
 
         session.add(editActivity)
         session.commit()
         flash("Activity Successfully Edited: %s" % editActivity.name)
-        return redirect(url_for('showMyActivities', user_id=user_id, title="My Activities"))
+        return redirect(url_for(
+            'showMyActivities', user_id=user_id, title="My Activities"))
     else:
         return render_template(
             'editActivity.html', current=editActivity, user_id=user_id)
@@ -576,7 +619,8 @@ def deleteMyActivity(myActivity_id, user_id):
         flash("Activity Successfully Deleted: %s" % deleteActivity.name)
         session.delete(deleteActivity)
         session.commit()
-        return redirect(url_for('showMyActivities', user_id=user_id, title="My Activities"))
+        return redirect(url_for(
+            'showMyActivities', user_id=user_id, title="My Activities"))
     else:
         return render_template(
             "deleteMyActivity.html", current=deleteActivity, user_id=user_id)

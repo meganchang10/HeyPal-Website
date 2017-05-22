@@ -43,7 +43,7 @@ count += 1;
 session.add(Activity1)
 session.commit()
 
-Activity1 = Activity(name = "Bowl", location = "Zodo's", image = "http://4.bp.blogspot.com/-RxS__tfUxx4/VWGyB5kPAFI/AAAAAAAAA4E/xKUBWuOJAic/s1600/Sans%2Btitre.png", id = count, user_id =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = "yes", tag_free = "no", tag_outdoor = "no", tag_special = "no", tag_learn = "no", tag_date_night = "yes")
+Activity1 = Activity(name = "Bowl", location = "Zodo's", image = "http://baligo.co/wp-content/uploads/2015/02/edited3strike.jpg", id = count, user_id =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = "yes", tag_free = "no", tag_outdoor = "no", tag_special = "no", tag_learn = "no", tag_date_night = "yes")
 count += 1;
 session.add(Activity1)
 session.commit()
@@ -149,7 +149,7 @@ count += 1;
 session.add(Activity1)
 session.commit()
 
-Activity1 = Activity(name = "Butterfly Watch", location = "Coronado Reserve", image = "https://fthmb.tqn.com/ghXwRdOx1ah3hEVa4ycaBUeTILY=/2122x1415/filters:fill(auto,1)/about/GettyImages-513055973-573ba3a05f9b58723dd73854.jpg", id = count, user_id =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = "no", tag_free = "yes", tag_outdoor = "yes", tag_special = "no", tag_learn = "no", tag_date_night = "yes")
+Activity1 = Activity(name = "Look", location = "Coronado Butterfly Reserve", image = "https://fthmb.tqn.com/ghXwRdOx1ah3hEVa4ycaBUeTILY=/2122x1415/filters:fill(auto,1)/about/GettyImages-513055973-573ba3a05f9b58723dd73854.jpg", id = count, user_id =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = "no", tag_free = "yes", tag_outdoor = "yes", tag_special = "no", tag_learn = "no", tag_date_night = "yes")
 count += 1;
 session.add(Activity1)
 session.commit()

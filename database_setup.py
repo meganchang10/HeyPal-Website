@@ -67,6 +67,7 @@ class MyActivity(Base):
     image = Column(String)
     location = Column(String(250))
     # TODO date = Column(DateTime, default=datetime.datetime.utcnow)
+    adds_to_myActivities = Column(Integer)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
