@@ -14,6 +14,7 @@ import httplib2
 import json
 from flask import make_response
 import requests
+from functools import wraps
 
 app = Flask(__name__)
 
@@ -271,7 +272,29 @@ def gdisconnect():
 # BEGINNNING
 
 
+def login_required(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        if "username" not in login_session:
+            return redirect('/login')
+        return f(*args, **kwargs)
+    return wrapper
+
+
+def clearance_level_required(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        if "username" not in login_session:
+            return redirect('/login')
+        if login_session['user_id'] != 1:
+            flash("Only Authorized Users Can Access That Page")
+            return redirect("/")
+        return f(*args, **kwargs)
+    return wrapper
+
+
 # Show all activities
+@app.route('/')
 @app.route('/activities')
 @app.route('/heypal/activities/')
 @app.route('/heypal/', methods=["GET", "POST"])
@@ -347,9 +370,8 @@ def showActivity(activity_id):
 
 # Create a new activity
 @app.route('/heypal/new', methods=["GET", "POST"])
+@clearance_level_required
 def newActivity():
-    if "username" not in login_session:
-        return redirect('/login')
     if request.method == "POST":
 
         # Check tags first
@@ -406,9 +428,8 @@ def checkTags(request):
 
 
 @app.route('/heypal/<int:activity_id>/edit/', methods=["GET", "POST"])
+@clearance_level_required
 def editActivity(activity_id):
-    if "username" not in login_session:
-        return redirect('/login')
     editActivity = session.query(Activity).filter_by(id=activity_id).one()
     if request.method == "POST":
 
@@ -438,9 +459,8 @@ def editActivity(activity_id):
 
 
 @app.route('/heypal/<int:activity_id>/delete/', methods=["GET", "POST"])
+@clearance_level_required
 def deleteActivity(activity_id):
-    if "username" not in login_session:
-        return redirect('/login')
     deleteActivity = session.query(Activity).filter_by(id=activity_id).one()
     if request.method == "POST":
         session.delete(deleteActivity)
@@ -456,22 +476,23 @@ def deleteActivity(activity_id):
 
 # I use a double redirect to view myActivities because it requires user_id
 @app.route('/heypal/myActivities')
+@login_required
 def showMyActivitiesRedirect():
-    if "username" not in login_session:
-        return redirect('/login')
     user_id = login_session['user_id']
     return redirect(url_for(
         'showMyActivities', user_id=user_id, title="My Activities"))
 
 
 @app.route('/heypal/<int:user_id>/myActivities', methods=["GET", "POST"])
+@login_required
 def showMyActivities(user_id):
+    if login_session['user_id'] != user_id:
+        flash("Only Authorized Users Can Access That Page")
+        return redirect("/")
     myActivities = session.query(MyActivity).filter_by(user_id=user_id).all()
     tags = ["My Activities", "Free Activities", "Get Active", "Get Outdoors",
             "Rainy Day", "Special Occasions", "Better Yourself", "Date Night"]
 
-    if "username" not in login_session:
-        return redirect('/login')
     if request.method == "POST":
         filter_results = request.form.get('filter_results')
         myActivities = executeFilter_myActivity(filter_results, user_id)
@@ -514,6 +535,9 @@ def executeFilter_myActivity(filter_results, user_id):
 
 @app.route('/heypal/<int:user_id>/<int:myActivity_id>/myActivity')
 def showMyActivity(myActivity_id, user_id):
+    if login_session['user_id'] != user_id:
+        flash("Only Authorized Users Can Access That Page")
+        return redirect("/")
     activity = session.query(MyActivity).filter_by(id=myActivity_id).one()
     return render_template(
         'myActivity.html', current=activity, user_id=user_id)
@@ -521,9 +545,8 @@ def showMyActivity(myActivity_id, user_id):
 
 @app.route(
     '/heypal/<int:activity_id>/addToMyActivities/', methods=["POST"])
+@login_required
 def addToMyActivities(activity_id):
-    if "username" not in login_session:
-        return redirect('/login')
     if request.method == "POST":
         activity = session.query(Activity).filter_by(id=activity_id).one()
         activity.adds_to_myActivities += 1
@@ -551,9 +574,11 @@ def addToMyActivities(activity_id):
 
 
 @app.route('/heypal/<int:user_id>/new', methods=["GET", "POST"])
+@login_required
 def newMyActivity(user_id):
-    if "username" not in login_session:
-        return redirect('/login')
+    if login_session['user_id'] != user_id:
+        flash("Only Authorized Users Can Access That Page")
+        return redirect("/")
     if request.method == "POST":
 
         newMyActivity = MyActivity(
@@ -574,9 +599,11 @@ def newMyActivity(user_id):
 
 @app.route(
     '/heypal/<int:user_id>/<int:myActivity_id>/edit/', methods=["GET", "POST"])
+@login_required
 def editMyActivity(myActivity_id, user_id):
-    if "username" not in login_session:
-        return redirect('/login')
+    if login_session['user_id'] != user_id:
+        flash("Only Authorized Users Can Access That Page")
+        return redirect("/")
     editActivity = session.query(MyActivity).filter_by(
         id=myActivity_id).one()
     if request.method == "POST":
@@ -611,8 +638,9 @@ def editMyActivity(myActivity_id, user_id):
     '/heypal/<int:user_id>/<int:myActivity_id>/delete/',
     methods=["GET", "POST"])
 def deleteMyActivity(myActivity_id, user_id):
-    if "username" not in login_session:
-        return redirect('/login')
+    if login_session['user_id'] != user_id:
+        flash("Only Authorized Users Can Access That Page")
+        return redirect("/")
     deleteActivity = session.query(MyActivity).filter_by(
         id=myActivity_id).one()
     if request.method == "POST":
@@ -638,8 +666,7 @@ def activityJSON(activity_id):
 @app.route('/heypal/activities/JSON')
 def activitiesJSON():
     activities = session.query(Activity).all()
-    for activity in activities:
-        return jsonify(All_Activities=[a.serialize for a in activities])
+    return jsonify(All_Activities=[a.serialize for a in activities])
 
 
 @app.route('/heypal/myActivity/<int:myActivity_id>/JSON')
