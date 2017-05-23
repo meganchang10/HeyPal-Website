@@ -293,32 +293,20 @@ def clearance_level_required(f):
     return wrapper
 
 
-# Show all activities
-@app.route('/')
-@app.route('/activities')
-@app.route('/heypal/activities/')
-@app.route('/heypal/', methods=["GET", "POST"])
-def showActivities():
-    activities = session.query(
-        Activity).order_by(Activity.log_views.desc()).all()
-    tags = ["All Activities", "Free Activities", "Get Active", "Get Outdoors",
-            "Rainy Day", "Special Occasions", "Better Yourself", "Date Night"]
-    if 'username' not in login_session or login_session['user_id'] != 1:
-        return render_template(
-            'publicActivities.html', activities=activities, tags=tags,
-            title="All Activities")
-    else:
-        if request.method == "POST":
-            # Check for filters
-            filter_results = request.form.get('filter_results')
-            activities = executeFilter_Activity(filter_results)
-            return render_template(
-                'activities.html', activities=activities, tags=tags,
-                title=filter_results)
-        else:
-            return render_template(
-                'activities.html', activities=activities, tags=tags,
-                title="All Activities")
+def checkTags(request):
+    tag_free = request.form.get('tag_free')
+    tag_sporty = request.form.get('tag_sporty')
+    tag_outdoor = request.form.get('tag_outdoor')
+    tag_special = request.form.get('tag_special')
+    tag_learn = request.form.get('tag_learn')
+    tag_date_night = request.form.get('tag_date_night')
+
+    # So we can filter for "Rainy Day" search
+    if not tag_outdoor:
+        tag_outdoor = "no"
+
+    return [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
+            tag_date_night]
 
 
 def executeFilter_Activity(filter_results):
@@ -354,6 +342,64 @@ def executeFilter_Activity(filter_results):
             Activity).filter_by(tag_date_night="yes").order_by(
             Activity.log_views.desc()).all()
     return activities
+
+
+def executeFilter_myActivity(filter_results, user_id):
+    if filter_results == "My Activities":
+        myActivities = session.query(
+            MyActivity).filter_by(user_id=user_id).all()
+    elif filter_results == "Free Activities":
+        myActivities = session.query(
+            MyActivity).filter_by(tag_free="yes", user_id=user_id)
+    elif filter_results == "Get Active":
+        myActivities = session.query(
+            MyActivity).filter_by(tag_sporty="yes", user_id=user_id)
+    elif filter_results == "Get Outdoors":
+        myActivities = session.query(
+            MyActivity).filter_by(tag_outdoor="yes", user_id=user_id)
+    elif filter_results == "Rainy Day":
+        myActivities = session.query(
+            MyActivity).filter_by(tag_outdoor="no", user_id=user_id)
+    elif filter_results == "Special Occasions":
+        myActivities = session.query(
+            MyActivity).filter_by(tag_special="yes", user_id=user_id)
+    elif filter_results == "Better Yourself":
+        myActivities = session.query(
+            MyActivity).filter_by(tag_learn="yes", user_id=user_id)
+    elif filter_results == "Date Night":
+        myActivities = session.query(
+            MyActivity).filter_by(tag_date_night="yes", user_id=user_id)
+    return myActivities
+
+
+# Show all activities
+@app.route('/')
+@app.route('/activities')
+@app.route('/heypal/activities/')
+@app.route('/heypal/', methods=["GET", "POST"])
+def showActivities():
+    activities = session.query(
+        Activity).order_by(Activity.log_views.desc()).all()
+    tags = ["All Activities", "Free Activities", "Get Active", "Get Outdoors",
+            "Rainy Day", "Special Occasions", "Better Yourself", "Date Night"]
+
+    if request.method == "POST":
+        # Check for filters
+        filter_results = request.form.get('filter_results')
+        activities = executeFilter_Activity(filter_results)
+        return render_template(
+            'activities.html', activities=activities, tags=tags,
+            title=filter_results)
+
+    else:
+        if 'username' not in login_session or login_session['user_id'] != 1:
+            return render_template(
+                'publicActivities.html', activities=activities, tags=tags,
+                title="All Activities")
+        else:
+            return render_template(
+                'activities.html', activities=activities, tags=tags,
+                title="All Activities")
 
 
 @app.route('/heypal/<int:activity_id>/activity')
@@ -400,31 +446,6 @@ def newActivity():
         return redirect(url_for('showActivities', title="All Activities"))
     else:
         return render_template("newActivity.html")
-
-
-def checkTags(request):
-    tag_free = request.form.get('tag_free')
-    tag_sporty = request.form.get('tag_sporty')
-    tag_outdoor = request.form.get('tag_outdoor')
-    tag_special = request.form.get('tag_special')
-    tag_learn = request.form.get('tag_learn')
-    tag_date_night = request.form.get('tag_date_night')
-
-    if not tag_free:
-        tag_free = "no"
-    if not tag_sporty:
-        tag_sporty = "no"
-    if not tag_outdoor:
-        tag_outdoor = "no"
-    if not tag_special:
-        tag_special = "no"
-    if not tag_learn:
-        tag_learn = "no"
-    if not tag_date_night:
-        tag_date_night = "no"
-
-    return [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
-            tag_date_night]
 
 
 @app.route('/heypal/<int:activity_id>/edit/', methods=["GET", "POST"])
@@ -486,6 +507,7 @@ def showMyActivitiesRedirect():
 @app.route('/heypal/<int:user_id>/myActivities', methods=["GET", "POST"])
 @login_required
 def showMyActivities(user_id):
+    # Authorization required
     if login_session['user_id'] != user_id:
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
@@ -505,36 +527,10 @@ def showMyActivities(user_id):
             user_id=user_id, title="My Activities")
 
 
-def executeFilter_myActivity(filter_results, user_id):
-    if filter_results == "My Activities":
-        myActivities = session.query(
-            MyActivity).filter_by(user_id=user_id).all()
-    elif filter_results == "Free Activities":
-        myActivities = session.query(
-            MyActivity).filter_by(tag_free="yes", user_id=user_id)
-    elif filter_results == "Get Active":
-        myActivities = session.query(
-            MyActivity).filter_by(tag_sporty="yes", user_id=user_id)
-    elif filter_results == "Get Outdoors":
-        myActivities = session.query(
-            MyActivity).filter_by(tag_outdoor="yes", user_id=user_id)
-    elif filter_results == "Rainy Day":
-        myActivities = session.query(
-            MyActivity).filter_by(tag_outdoor="no", user_id=user_id)
-    elif filter_results == "Special Occasions":
-        myActivities = session.query(
-            MyActivity).filter_by(tag_special="yes", user_id=user_id)
-    elif filter_results == "Better Yourself":
-        myActivities = session.query(
-            MyActivity).filter_by(tag_learn="yes", user_id=user_id)
-    elif filter_results == "Date Night":
-        myActivities = session.query(
-            MyActivity).filter_by(tag_date_night="yes", user_id=user_id)
-    return myActivities
-
-
 @app.route('/heypal/<int:user_id>/<int:myActivity_id>/myActivity')
+@login_required
 def showMyActivity(myActivity_id, user_id):
+    # Authorization required
     if login_session['user_id'] != user_id:
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
@@ -576,10 +572,14 @@ def addToMyActivities(activity_id):
 @app.route('/heypal/<int:user_id>/new', methods=["GET", "POST"])
 @login_required
 def newMyActivity(user_id):
+    # Authorization required
     if login_session['user_id'] != user_id:
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
     if request.method == "POST":
+
+        [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
+         tag_date_night] = checkTags(request)
 
         newMyActivity = MyActivity(
             name=request.form['name'],
@@ -601,11 +601,14 @@ def newMyActivity(user_id):
     '/heypal/<int:user_id>/<int:myActivity_id>/edit/', methods=["GET", "POST"])
 @login_required
 def editMyActivity(myActivity_id, user_id):
+    # Authorization required
     if login_session['user_id'] != user_id:
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
+
     editActivity = session.query(MyActivity).filter_by(
         id=myActivity_id).one()
+
     if request.method == "POST":
         if request.form['name']:
             editActivity.name = request.form['name']
@@ -638,11 +641,14 @@ def editMyActivity(myActivity_id, user_id):
     '/heypal/<int:user_id>/<int:myActivity_id>/delete/',
     methods=["GET", "POST"])
 def deleteMyActivity(myActivity_id, user_id):
+    # Authorization required
     if login_session['user_id'] != user_id:
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
+
     deleteActivity = session.query(MyActivity).filter_by(
         id=myActivity_id).one()
+
     if request.method == "POST":
         flash("Activity Successfully Deleted: %s" % deleteActivity.name)
         session.delete(deleteActivity)
