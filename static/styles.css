@@ -64,16 +64,19 @@ h3 {
 .btn {
     padding: 20px;
     margin: 0;
-    border-color: #9FB80A;
+    /*border-color: #9FB80A;*/
     border-width: 2px;
-    color: #9FB80A;
+    /*color: #9FB80A;*/
+    color: #42C3C9;
+    border-color: #42C3C9;
 }
 
 .btn-small {
     margin: 0;
     border-color: #9FB80A;
     border-width: 2px;
-    color: #9FB80A;
+    /*color: #9FB80A;*/
+    color: #42C3C9;
 }
 
 .btn:hover {
@@ -94,9 +97,12 @@ h3 {
     margin-right: 10px;
 }
 
+/* Navbar at very top of page */
 .top-menu {
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #42C3C9;
+    background-color: #ff9933;
 }
 
 .top-menu p {
@@ -104,11 +110,13 @@ h3 {
     line-height: 16px;
 }
 
+/* Navbar at very top of page */
 .top-menu a {
     margin-bottom: 0;
     line-height: 16px;
     font-size: 16px;
-    color: #7B7573;
+    /*color: #7B7573;*/
+    color: #fff;
     font-weight: 400;
 }
 
@@ -124,6 +132,10 @@ h3 {
     background-color: #9FB80A;
 }
 
+.divider.orange {
+    background-color: #ff9933;
+}
+
 /* This specifies the main banner
 .banner.main {
     height: 150px;
@@ -132,20 +144,27 @@ h3 {
     background-repeat: no-repeat;
     background-size: cover;
 }
+height: 110px;
+background: url("/static/logo.png");
 */
+
 
 /* Banner header and logo */
 .banner.main {
     height: 110px;
-    background: url("/static/logo.png");
+    /*background: url("/static/banner-blue.png");*/
     background-position: right;
-    background-repeat: no-repeat;
-    background-size: 200px;
+    background-repeat: repeat;
+    background-size: 900px;
 }
 
 .logo {
-    border-radius: 5px;
-    box-shadow: 5px 5px 20px #ccc;
+    height: 110px;
+    background: url("/static/logo.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 200px;
+    padding: 10px;
 }
 
 .banner.menu {
@@ -162,6 +181,7 @@ h3 {
 .banner h1 {
     margin: 20px 0;
     font-family: 'Lobster', cursive;
+    /*color: #ffffff;*/
 }
 
 /* Username text in banner */
@@ -220,6 +240,7 @@ h3 {
 
 .flash {
     background-color: #98FB98;
+    /*background-color: #80ffff;*/
     width:100%;
     text-decoration: none;
 }
@@ -237,6 +258,9 @@ h3 {
     background-size:cover;
 }
 
+.title {
+    font-family: 'Lobster', cursive;
+}
 
 .clearfix {
     overflow: auto;

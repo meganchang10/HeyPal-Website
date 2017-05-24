@@ -103,18 +103,36 @@ class Pal(Base):
     __tablename__ = 'pal'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
-    myActivity_id = Column(Integer, ForeignKey('myActivity.id'))
-    myActivity = relationship(MyActivity)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    pal_id = Column(Integer, ForeignKey('user.id'))
+    pal_name = Column(String(250), ForeignKey('user.name'))
+
+    user = relationship(User, foreign_keys=[user_id])
+    pal = relationship(User, foreign_keys=[pal_id])
+    name = relationship(User, foreign_keys=[pal_name])
 
     @property
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-            'name': self.name,
             'id': self.id,
+            'user_id': self.user_id,
+            'pal_id': self.pal_id,
+            'pal_name': self.pal_name
         }
 
 
 engine = create_engine('sqlite:///heypal.db')
 Base.metadata.create_all(engine)
+
+
+
+
+
+
+
+
+
+
+
+

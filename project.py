@@ -121,7 +121,7 @@ def fbdisconnect():
            % (facebook_id, access_token))
     h = httplib2.Http()
     result = h.request(url, 'DELETE')[1]
-    return "you have been logged out"
+    return "You have been logged out."
 
 
 @app.route('/gconnect', methods=['POST'])
@@ -660,6 +660,77 @@ def deleteMyActivity(myActivity_id, user_id):
             "deleteMyActivity.html", current=deleteActivity, user_id=user_id)
 
 
+###############################################################################
+###############################################################################
+@app.route('/heypal/invites')
+@login_required
+def invitesRedirect():
+    user_id = login_session['user_id']
+    return redirect(url_for(
+        'seeInvites', user_id=user_id, title="My Activities"))
+
+
+@app.route('/heypal/<int:user_id>/invites/')
+@login_required
+def seeInvites(user_id):
+    if login_session['user_id'] != user_id:
+        flash("Only Authorized Users Can Access That Page")
+        return redirect("/")
+    if request.method == "GET":
+        return render_template(
+            'myInvites.html', user_id=user_id, title="My Activities")
+
+
+@app.route(
+    '/heypal/<int:user_id>/<int:myActivity_id>/sendInvite/',
+    methods=["GET", "POST"])
+def sendInvite(user_id, myActivity_id):
+    if request.method == "POST":
+        pals = session.query(Pal).filter_by(user_id=user_id).all()
+
+        friends = checkInvites(request)
+
+        invited = []
+
+        for friend in friends:
+            if friend == "yes":
+                #invited.append(pal.pal_name)
+                invited.append(friend)
+
+        print invited
+
+        flash("Invitations have been sent!")
+        return redirect(url_for(
+            'showMyActivities', user_id=user_id, title="My Activities"))
+    else:
+        activity = session.query(MyActivity).filter_by(id=myActivity_id).one()
+        # Assume friends each have id number associated as 1, 2, 3
+        # pals = session.query(Pal).filter_by(user_id=user_id).all()
+        pals = session.query(Pal).filter_by(user_id=user_id).all()
+        print("AYO")
+        return render_template(
+            'sendInvite.html', current=activity, user_id=user_id, pals=pals)
+
+
+
+def checkInvites(request):
+    Christa = request.form.get('Christa')
+    David = request.form.get('David')
+    Sam = request.form.get('Sam')
+
+    # So we can filter for "Rainy Day" search
+    if not Christa:
+        Christa = "no"
+    if not David:
+        David = "no"
+    if not Sam:
+        Sam = "no"
+
+    return [Christa, David, Sam]
+
+
+
+
 # JSON functions
 ###############################################################################
 
@@ -685,6 +756,12 @@ def myActivityJSON(myActivity_id):
 def myActivitiesJSON():
     myActivities = session.query(MyActivity).all()
     return jsonify(All_My_Activities=[a.serialize for a in myActivities])
+
+
+@app.route('/heypal/pals/JSON')
+def palsJSON():
+    pals = session.query(Pal).all()
+    return jsonify(All_Pals=[a.serialize for a in pals])
 
 
 # ENDING #

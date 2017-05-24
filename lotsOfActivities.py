@@ -20,11 +20,39 @@ session = DBSession()
 
 
 # Create dummy user
-
-User1 = User(name="Megan Chang", email="meganchang10@gmail.com",
-             picture='https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAvOAAAAJDRiYjgxMTQ0LTA5MzQtNDdlZi1iZGQyLTYxMjNmNmU0Mzg5Zg.jpg', id = 1)
+User1 = User(name="Megan Chang", email="meganchang10@gmail.com",id = 1)
 session.add(User1)
 session.commit()
+
+
+User1 = User(name="Christa", email="christa@gmail.com", id=2)
+session.add(User1)
+session.commit()
+
+User1 = User(name="David", email="david@gmail.com", id=3)
+session.add(User1)
+session.commit()
+
+User1 = User(name="Sam", email="sam@gmail.com", id=4)
+session.add(User1)
+session.commit()
+
+
+# Christa
+Pal1 = Pal(pal_name="Christa", id=1, user_id=1, pal_id=2)
+session.add(Pal1)
+session.commit()
+
+# David
+Pal1 = Pal(pal_name = "David", id=2, user_id=1, pal_id=3)
+session.add(Pal1)
+session.commit()
+
+# Sam
+Pal1 = Pal(pal_name = "Sam", id=3, user_id=1, pal_id=4)
+session.add(Pal1)
+session.commit()
+
 
 count = 1
 Activity1 = Activity(name = "Volleyball", location = "Leadbetter Beach", image = "http://www.smart-magazine.com/content/uploads/2015/08/Beachvolleyball-Berlin-Smart-Magazine-8.jpg", id =count, user_id =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = "yes", tag_free = "yes", tag_outdoor = "yes", tag_special = "no", tag_learn = "no", tag_date_night = "no")

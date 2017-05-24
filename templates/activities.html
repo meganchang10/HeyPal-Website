@@ -2,20 +2,21 @@
 {% block content %}
 {% include "header.html" %}
 
-<div class = "row text-center">
-Bored? Don't be! Welcome to HeyPal! Where we come up with the ideas. You just send the invites.
-</div>
 
-  <div class="row divider green">
-    <div class="col-md-12"></div>
-  </div>
   <div class="row banner main">
-    <div class="col-md-12 padding-mini">
+    <div class="col-md-6 padding-mini">
       <h1>HeyPal</h1>
     </div>
+    <div class="col-md-6 padding-mini logo">
+    </div>
   </div>
-  <div class="row divider green">
+
+  <div class="row divider orange">
     <div class="col-md-12"></div>
+  </div>
+
+  <div class = "row text-center">
+    Bored? Don't be! Welcome to HeyPal! Where we come up with the ideas. You just send the invites.
   </div>
 
 
@@ -47,7 +48,7 @@ Bored? Don't be! Welcome to HeyPal! Where we come up with the ideas. You just se
       </a>
     </div>
     <div class="col-md-6">
-      <span class="text-center"><h1>{{title}}</h1></span>
+      <span class="text-center"><h1 class="title">{{title}}</h1></span>
     </div>
     <div class="col-md-3">
       <form name="filter_results" method='POST'>

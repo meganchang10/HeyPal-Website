@@ -29,6 +29,12 @@
   <div class="row padding-top padding-bottom">
     <div class="col-md-12 padding-mini">
 
+        <a href="{{url_for('sendInvite',myActivity_id = current.id,user_id = user_id)}}">
+          <button class="btn btn-default" id="send-invite">
+          <span class="glyphicon glyphicon-envelope"></span>Send Invite to Pals
+          </button>
+        </a>
+
         <a href="{{url_for('editMyActivity', myActivity_id = current.id, user_id = user_id)}}">
           <button class="btn btn-default" id="edit-my-activity">
           <span class="glyphicon glyphicon-pencil"></span>Edit Activity
