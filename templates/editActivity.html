@@ -1,7 +1,8 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-  <div class="row divider green">
+
+  <div class="row divider blue">
     <div class="col-md-12"></div>
   </div>
   <div class="row banner menu">
@@ -24,6 +25,13 @@
 
           <label for="location">Location:</label>
           <input type ="text" maxlength="50" class="form-control" name="location"placeholder="{{current.location}}">
+
+          <p></p>
+
+          <label for="image">Date:</label>
+          <input type ="text" maxlength="2" class="form-control" name="month">
+          <input type ="text" maxlength="2" class="form-control" name="day">
+          <input type ="text" maxlength="2" class="form-control" name="year">
 
           <p></p>
 

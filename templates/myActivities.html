@@ -2,19 +2,6 @@
 {% block content %}
 {% include "header.html" %}
 
-  <div class="row banner main">
-    <div class="col-md-3 padding-mini">
-      <h1>HeyPal</h1>
-    </div>
-    <div class="col-md-6 padding-mini">
-      <h2 class = "text-center">{{session['username']}}</h2>
-    </div>
-  </div>
-
-  <div class="row divider orange">
-    <div class="col-md-12"></div>
-  </div>
-
 <!-- FLASH CODE  -->
   <div class = 'flash'>
     {% with messages = get_flashed_messages() %}

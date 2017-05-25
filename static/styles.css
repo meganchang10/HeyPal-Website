@@ -67,8 +67,9 @@ h3 {
     /*border-color: #9FB80A;*/
     border-width: 2px;
     /*color: #9FB80A;*/
-    color: #42C3C9;
-    border-color: #42C3C9;
+    color: #18bff7;
+    border-color: #18bff7;
+
 }
 
 .btn-small {
@@ -80,7 +81,7 @@ h3 {
 }
 
 .btn:hover {
-    border-color: #9FB80A;
+    border-color: #42C3C9;
 }
 
 .btn.delete {
@@ -102,7 +103,7 @@ h3 {
     padding-top: 12px;
     padding-bottom: 12px;
     background-color: #42C3C9;
-    background-color: #ff9933;
+    background-color: #ff9933;;
 }
 
 .top-menu p {
@@ -124,8 +125,12 @@ h3 {
     height: 15px;
 }
 
-.divider.blue {
+.divider.blue2 {
     background-color: #42C3C9;
+}
+
+.divider.blue {
+    background-color: #18bff7;
 }
 
 .divider.green {
@@ -167,9 +172,14 @@ background: url("/static/logo.png");
     padding: 10px;
 }
 
+.logos-height {
+    width: 200px;
+    padding: 10px;
+}
+
 .banner.menu {
-    height: 150px;
-    background-color: #E1E17F;
+    height: 100px;
+    background-color: #a5e2f7;
 }
 
 .banner.profile {
@@ -239,8 +249,8 @@ background: url("/static/logo.png");
 }
 
 .flash {
-    background-color: #98FB98;
-    /*background-color: #80ffff;*/
+    /*background-color: #98FB98;*/
+    background-color: #18bff7;
     width:100%;
     text-decoration: none;
 }
@@ -256,6 +266,10 @@ background: url("/static/logo.png");
     overflow: hidden;
     background-position: left;
     background-size:cover;
+}
+
+.activity-view {
+    max-height: 300px;
 }
 
 .title {

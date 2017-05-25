@@ -25,7 +25,7 @@ session.add(User1)
 session.commit()
 
 
-User1 = User(name="Christa", email="christa@gmail.com", id=2)
+User1 = User(name="Christa", email="changsta5@gmail.com", id=2)
 session.add(User1)
 session.commit()
 
@@ -39,17 +39,26 @@ session.commit()
 
 
 # Christa
-Pal1 = Pal(pal_name="Christa", id=1, user_id=1, pal_id=2)
+Pal1 = Pal(name="Christa", id=1, user_id=1, pal_id=2)
 session.add(Pal1)
 session.commit()
 
 # David
-Pal1 = Pal(pal_name = "David", id=2, user_id=1, pal_id=3)
+Pal1 = Pal(name = "David", id=2, user_id=1, pal_id=3)
 session.add(Pal1)
 session.commit()
 
 # Sam
-Pal1 = Pal(pal_name = "Sam", id=3, user_id=1, pal_id=4)
+Pal1 = Pal(name = "Sam", id=3, user_id=1, pal_id=4)
+session.add(Pal1)
+session.commit()
+
+
+Pal1 = Pal(user_id=5, pal_id=1, name = "Megan_FB")
+session.add(Pal1)
+session.commit()
+
+Pal1 = Pal(user_id=1, pal_id=5, name = "Megan_gmail")
 session.add(Pal1)
 session.commit()
 

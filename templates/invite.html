@@ -1,0 +1,58 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "myHeader.html" %}
+
+  <div class="row divider blue">
+    <div class="col-md-12"></div>
+  </div>
+  <div class="row banner menu">
+    <div class="col-md-11 col-md-offset-1 padding-none">
+      <h1>Let's Go!</h1>
+    </div>
+  </div>
+
+<!-- Just one activity  -->
+    <article class="col-md-6 col-md-offset-1 padding-top">
+        <h1>{{current.name}} @ {{current.location}}</h1>
+
+        <h4>Current Tags:</h4>
+        {% if current.tag_free == "yes"%} Free <br>{% endif %}
+        {% if current.tag_sporty == "yes"%} Sporty<br>{% endif %}
+        {% if current.tag_outdoor == "yes"%} Outdoors<br> {% endif %}
+        {% if current.tag_special == "yes"%} Special Occasions<br> {% endif %}
+        {% if current.tag_learn == "yes"%} Better Yourself<br> {% endif %}
+        {% if current.tag_date_night == "yes"%} Date Night<br> {% endif %}
+
+        <img src="{{current.image}}" class="img-responsive" alt="{{current.name}} Image">
+    </article>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+    <div class="col-md-4 col-md-offset-1 padding-top">
+
+          <label for="pals">Crew:</label><br>
+
+          {% for pal in pals %}
+          {{pal.name}}<br>
+          {% endfor %}
+
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+
+          <label for="message">Message:</label>
+          <h4>{{current.message}}</h4>
+
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+
+          <label for="creator">Created by:</label>
+          <h4>{{host.name}}</h4>
+
+
+    </div>
+
+
+  <!-- ENDS here  -->
+
+{% endblock %}

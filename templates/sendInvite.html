@@ -1,9 +1,11 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
-  <div class="row divider green">
+{% include "myHeader.html" %}
+
+  <div class="row divider blue">
     <div class="col-md-12"></div>
   </div>
+
   <div class="row banner menu">
     <div class="col-md-11 col-md-offset-1 padding-none">
       <h1>Invite your Pals</h1>
@@ -19,17 +21,17 @@
         <div class="form-group">
 
           <label for="name">Name:</label>
-          <input type ="text" maxlength="50" class="form-control" name="name"placeholder="{{current.name}}">
+          <input type ="text" maxlength="50" class="form-control" name="name" placeholder="{{current.name}}">
 
           <p></p>
 
           <label for="location">Location:</label>
-          <input type ="text" maxlength="50" class="form-control" name="location"placeholder="{{current.location}}">
+          <input type ="text" maxlength="50" class="form-control" name="location" placeholder="{{current.location}}">
 
           <p></p>
 
           <label for="image">Image:</label>
-          <input type ="text" maxlength="250" class="form-control" name="image"placeholder="{{current.image}}">
+          <input type ="text" maxlength="250" class="form-control" name="image" placeholder="{{current.image}}">
 
           <p></p>
 
@@ -64,13 +66,13 @@
           <label for="pals">Pals to Invite:</label><br>
 
           {% for pal in pals %}
-          <input type="checkbox" name={{pal.pal_name}} value="yes" > {{pal.pal_name}} <br>
+          <input type="checkbox" name={{pal.name}} value="yes" >  {{pal.name}}<br>
           {% endfor %}
 
           <p></p>
 
           <label for="message">Message:</label>
-          <textarea class="form-control" maxlength="250" rows="3" name="message" placeholder="Hey Pals! Who would like to join me for this awesome activity?"></textarea>
+          <textarea class="form-control" maxlength="250" rows="3" name="message" placeholder="Hey Pals! Who is down for this awesome activity?"></textarea>
 
       </div>
 
