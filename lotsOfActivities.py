@@ -20,7 +20,7 @@ session = DBSession()
 
 
 # Create dummy user
-User1 = User(name="Megan Chang", email="meganchang10@gmail.com",id = 1, invites=0)
+User1 = User(name="Megan Chang", email="meganchang10@gmail.com",id = 1)
 session.add(User1)
 session.commit()
 
@@ -39,48 +39,34 @@ session.commit()
 
 
 # Christa
-Pal1 = Pal(name="Christa", id=1, user_id=1, pal_id=2)
+Pal1 = Pal(name="Christa", id=1, user_id=5, pal_id=2)
 session.add(Pal1)
 session.commit()
 
 # David
-Pal1 = Pal(name = "David", id=2, user_id=1, pal_id=3)
+Pal1 = Pal(name = "David", id=2, user_id=5, pal_id=3)
 session.add(Pal1)
 session.commit()
 
 # Sam
-Pal1 = Pal(name = "Sam", id=3, user_id=1, pal_id=4)
+Pal1 = Pal(name = "Sam", id=3, user_id=5, pal_id=4)
 session.add(Pal1)
 session.commit()
 
 
 #Pal1 = Pal(user_id=1, pal_id=5, name = "Megan(FB)")
-Pal1 = Pal(user_id=1, pal_id=5, name = "Megan Chang")
-session.add(Pal1)
-session.commit()
+#Pal1 = Pal(user_id=1, pal_id=5, name = "Megan Chang")
+#session.add(Pal1)
+#session.commit()
 
 
 # New person will have pals immediately!
 
-# Christa
-Pal1 = Pal(name="Christa Heinrich", user_id=5, pal_id=2)
-session.add(Pal1)
-session.commit()
-
-# David
-Pal1 = Pal(name = "David Childs", user_id=5, pal_id=3)
-session.add(Pal1)
-session.commit()
-
-# Sam
-Pal1 = Pal(name = "Sam Close", user_id=5, pal_id=4)
-session.add(Pal1)
-session.commit()
-
 #Pal1 = Pal(user_id=5, pal_id=1, name = "Megan(gmail)")
-Pal1 = Pal(user_id=5, pal_id=1, name = "Megan Chang")
-session.add(Pal1)
-session.commit()
+#Pal1 = Pal(user_id=5, pal_id=1, name = "Megan Chang")
+#session.add(Pal1)
+#session.commit()
+
 
 
 

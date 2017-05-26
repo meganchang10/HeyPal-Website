@@ -13,7 +13,6 @@ class User(Base):
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
-    invites = Column(Integer, default=0)
 
     @property
     def serialize(self):
@@ -21,8 +20,7 @@ class User(Base):
         return {
             'id': self.id,
             'name': self.name,
-            'email': self.email,
-            'invites': self.invites,
+            'email': self.email
         }
 
 

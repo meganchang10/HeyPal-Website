@@ -34,7 +34,9 @@ session = DBSession()
 session1 = session
 
 
+# These wrapper functions allow us to quickly check the authentication of users
 def login_required(f):
+    '''Wrapper function to redirect users to login page if necessary'''
     @wraps(f)
     def wrapper(*args, **kwargs):
         if "username" not in login_session:
@@ -44,6 +46,8 @@ def login_required(f):
 
 
 def clearance_level_required(f):
+    '''Wrapper function to alert users if they are trying to access restricted
+     area'''
     @wraps(f)
     def wrapper(*args, **kwargs):
         if "username" not in login_session:
@@ -61,9 +65,15 @@ def clearance_level_required(f):
 @app.route('/heypal/activities/')
 @app.route('/heypal/', methods=["GET", "POST"])
 def showActivities():
+    '''Performs a search query that returns all available public activities
+    (ones created by user 1)'''
+
     activities = session.query(
         Activity).filter_by(creator=1).order_by(
         Activity.log_views.desc()).all()
+
+    # These tags allow users to perform searches that filter results based on
+    # what sort of activity they are looking for
     tags = ["All Activities", "Free Activities", "Get Active", "Get Outdoors",
             "Rainy Day", "Special Occasions", "Better Yourself", "Date Night"]
 
@@ -88,6 +98,7 @@ def showActivities():
 
 @app.route('/heypal/<int:activity_id>/activity')
 def showActivity(activity_id):
+    '''Users can view a single activity entry to get more information'''
     activity = session.query(Activity).filter_by(id=activity_id).one()
     activity.log_views += 1
     session.add(activity)
@@ -103,6 +114,7 @@ def showActivity(activity_id):
 @login_required
 @clearance_level_required
 def newActivity():
+    '''Authorized users can create new public activities for the main page'''
     if request.method == "POST":
         newActivity = activity_handler.createActivity(request)
         session.add(newActivity)
@@ -115,6 +127,8 @@ def newActivity():
 @app.route('/heypal/<int:activity_id>/edit/', methods=["GET", "POST"])
 @clearance_level_required
 def editActivity(activity_id):
+    '''Authorized users can edit public activities to update the title,
+    location, image, description, etc.'''
     editActivity = session.query(Activity).filter_by(id=activity_id).one()
     creator = editActivity.creator
     if login_session['user_id'] != creator:
@@ -132,6 +146,7 @@ def editActivity(activity_id):
 @app.route('/heypal/<int:activity_id>/delete/', methods=["GET", "POST"])
 @clearance_level_required
 def deleteActivity(activity_id):
+    '''Authorized users can delete public activity entries on the main page'''
     deleteActivity = session.query(Activity).filter_by(id=activity_id).one()
     if request.method == "POST":
         session.delete(deleteActivity)
@@ -151,11 +166,10 @@ def deleteActivity(activity_id):
 ###############################################################################
 
 # My Activities
-
-# I use a double redirect to view myActivities because it requires user_id
 @app.route('/heypal/myActivities')
 @login_required
 def showMyActivitiesRedirect():
+    '''Redirect to My Activities page'''
     user_id = login_session['user_id']
     return redirect(url_for(
         'showMyActivities', creator=user_id, title="My Activities"))
@@ -164,6 +178,8 @@ def showMyActivitiesRedirect():
 @app.route('/heypal/<int:creator>/myActivities', methods=["GET", "POST"])
 @login_required
 def showMyActivities(creator):
+    '''Users can see the activities they added. They can review a catalog of
+    all the activities they showed interest in'''
     # Authorization required
     if login_session['user_id'] != creator:
         flash("Only Authorized Users Can Access That Page")
@@ -187,6 +203,7 @@ def showMyActivities(creator):
 @app.route('/heypal/<int:creator>/<int:myActivity_id>/myActivity')
 @login_required
 def showMyActivity(myActivity_id, creator):
+    '''Users can gain access to an invidual My Activity entry'''
     # Authorization required
     if login_session['user_id'] != creator:
         flash("Only Authorized Users Can Access That Page")
@@ -200,6 +217,8 @@ def showMyActivity(myActivity_id, creator):
     '/heypal/<int:activity_id>/addToMyActivities/', methods=["POST"])
 @login_required
 def addToMyActivities(activity_id):
+    '''Users can push a public activity to their private My Activities page,
+    if they want to add it to their activity ideas'''
     if request.method == "POST":
         activity = session.query(Activity).filter_by(id=activity_id).one()
         activity.adds_to_myActivities += 1
@@ -216,6 +235,7 @@ def addToMyActivities(activity_id):
 @app.route('/heypal/<int:creator>/new', methods=["GET", "POST"])
 @login_required
 def newMyActivity(creator):
+    '''Users can create their own My Activity from scratch'''
     # Authorization required
     if login_session['user_id'] != creator:
         flash("Only Authorized Users Can Access That Page")
@@ -234,6 +254,8 @@ def newMyActivity(creator):
     '/heypal/<int:creator>/<int:myActivity_id>/edit/', methods=["GET", "POST"])
 @login_required
 def editMyActivity(myActivity_id, creator):
+    '''Users can edit an activity they created or activity they pushed from the
+    public page with a different location, title, tags, etc.'''
     # Authorization required
     if login_session['user_id'] != creator:
         flash("Only Authorized Users Can Access That Page")
@@ -256,6 +278,7 @@ def editMyActivity(myActivity_id, creator):
     '/heypal/<int:creator>/<int:myActivity_id>/delete/',
     methods=["GET", "POST"])
 def deleteMyActivity(myActivity_id, creator):
+    '''Users can remove an activity from their My Activity page'''
     # Authorization required
     if login_session['user_id'] != creator:
         flash("Only Authorized Users Can Access That Page")
@@ -280,6 +303,7 @@ def deleteMyActivity(myActivity_id, creator):
 @app.route('/heypal/myInvites')
 @login_required
 def invitesRedirect():
+    '''Redirects to the Invites Page'''
     user_id = login_session['user_id']
     return redirect(url_for(
         'showMyInvites', user_id=user_id))
@@ -288,6 +312,8 @@ def invitesRedirect():
 @app.route('/heypal/<int:user_id>/myInvites', methods=["GET", "POST"])
 @login_required
 def showMyInvites(user_id):
+    '''Users can view all the events they have been invited to or invited
+    others to'''
     if login_session['user_id'] != user_id:
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
@@ -300,6 +326,8 @@ def showMyInvites(user_id):
 @app.route('/heypal/<int:user_id>/<string:invite_key>/invite')
 @login_required
 def showMyInvite(invite_key, user_id):
+    '''Users can view a single invite entry which displays information on the
+    activity as well as the guest list and a message from the creator'''
     if login_session['user_id'] != user_id:
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
@@ -310,7 +338,6 @@ def showMyInvite(invite_key, user_id):
     guests = session.query(User).filter(User.id.in_(guest_IDs))
     invite = session.query(Invite).filter_by(invite_key=invite_key).first()
     host = session.query(User).filter_by(id=invite.host).one()
-    print(guests)
     return render_template(
         'invite.html', current=invite, user_id=user_id, pals=guests, host=host)
 
@@ -319,6 +346,7 @@ def showMyInvite(invite_key, user_id):
     '/heypal/<int:creator>/<int:myActivity_id>/sendInvite/',
     methods=["GET", "POST"])
 def sendInvite(creator, myActivity_id):
+    '''Users can send invites to their pals'''
     if login_session['user_id'] != creator:
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
@@ -389,6 +417,7 @@ def usersJSON():
 # Create anti-forgery state token
 @app.route('/login')
 def showLogin():
+    '''View the login page'''
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in xrange(32))
     login_session['state'] = state
@@ -398,19 +427,21 @@ def showLogin():
 
 @app.route('/fbconnect', methods=['POST'])
 def fbLogin():
+    '''Executes FB login using login_handler'''
     output = login_handler.fbconnect()
     return output
 
 
 @app.route('/gconnect', methods=['POST'])
 def googleLogin():
+    '''Executes google login using login_handler'''
     output = login_handler.gconnect()
     return output
 
 
-# Disconnect based on provider
 @app.route('/disconnect')
 def disconnect():
+    '''Disconnects a user based on provide (FB or google)'''
     if 'provider' in login_session:
         if login_session['provider'] == 'google':
             logout_handler.gdisconnect()
@@ -433,6 +464,7 @@ def disconnect():
 
 @app.route('/fbdisconnect')
 def fbLogout():
+    '''Logout of HeyPal if FB was used to login'''
     output = logout_handler.fbdisconnect()
     return output
 
@@ -440,6 +472,7 @@ def fbLogout():
 # DISCONNECT - Revoke a current user's token and reset their login_session
 @app.route('/gdisconnect')
 def googleLogout():
+    '''Logout of HeyPal if google was used to login'''
     output = logout_handler.gdisconnect()
     return output
 

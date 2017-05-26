@@ -24,11 +24,7 @@ Congratulations, the website should be ready for viewing. Open up a browser of y
 
 http://localhost:5000/heypal/
 
-Explore the content! Only authorized users can add, edit, or delete activites on the public main page. However all logged in users have access to their own individual and private "My Activities" page where they can add, edit or delete their activities as they please.
-
-Included in this repository, please find:
-
-
+Explore the content! Only authorized users can add, edit, or delete activites on the public main page at the moment. However all logged in users have access to their own individual and private "My Activities" page where they can add, edit or delete their activities as they please. My activities can be created by the user or can be pushed from the public page options. In addition, an invites feature is currently being added. This feature allows the user to send invites to "pals" who are also HeyPal users. Adding "pals" is not a capability yet. However, for exploration processes, the user will automatically have 4 pals to whom they can send invites.
 
 More about HeyPal features:
 
