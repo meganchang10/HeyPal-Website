@@ -19,7 +19,7 @@
 
   <div class="row padding-top padding-bottom">
     <div class="col-md-3 padding-mini">
-      <a href="{{url_for('newMyActivity',user_id=user_id)}}">
+      <a href="{{url_for('newMyActivity',creator=creator)}}">
         <button class="btn btn-default" id="new-my-activity">
         <span class="glyphicon glyphicon-plus"></span>Add Activity
         </button>
@@ -49,7 +49,7 @@
   {% for myActivity in myActivities %}
 
     <article class="col-md-4 btn-default">
-      <a href="{{url_for('showMyActivity', myActivity_id = myActivity.id, user_id=user_id)}}">
+      <a href="{{url_for('showMyActivity', myActivity_id = myActivity.id, creator=creator)}}">
         <img src="{{myActivity.image}}" class="img-responsive activity-clip" alt="{{myActivity.name}} Image" >
         <h4>{{myActivity.name}} @ {{myActivity.location}}</h4>
       </a>

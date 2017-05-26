@@ -1,6 +1,6 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "myHeader.html" %}
+{% include "header.html" %}
 
   <div class="row divider blue">
     <div class="col-md-12"></div>
@@ -35,7 +35,7 @@
 
           <p></p>
 
-          <img src="{{current.image}}" class="img-responsive activity-clip">
+          <img src="{{current.image}}" class="img-responsive">
 
           <label for="description">Description:</label>
           <textarea class="form-control" maxlength="250" rows="3" name="description" placeholder="{{current.description}}"></textarea>
@@ -72,7 +72,7 @@
           <p></p>
 
           <label for="message">Message:</label>
-          <textarea class="form-control" maxlength="250" rows="3" name="message" placeholder="Hey Pals! Who is down for this awesome activity?"></textarea>
+          <textarea class="form-control" maxlength="250" rows="3" name="message" placeholder= "Hey Pals! Who is down for this awesome activity?" ></textarea>
 
       </div>
 

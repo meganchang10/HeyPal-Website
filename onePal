@@ -1,3 +1,0 @@
-Pal1 = Pal(user_id=5, pal_id=1)
-session.add(Pal1)
-session.commit()

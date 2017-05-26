@@ -26,6 +26,9 @@ http://localhost:5000/heypal/
 
 Explore the content! Only authorized users can add, edit, or delete activites on the public main page. However all logged in users have access to their own individual and private "My Activities" page where they can add, edit or delete their activities as they please.
 
+Included in this repository, please find:
+
+
 
 More about HeyPal features:
 

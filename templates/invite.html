@@ -1,6 +1,6 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "myHeader.html" %}
+{% include "header.html" %}
 
   <div class="row divider blue">
     <div class="col-md-12"></div>
@@ -15,7 +15,7 @@
     <article class="col-md-6 col-md-offset-1 padding-top">
         <h1>{{current.name}} @ {{current.location}}</h1>
 
-        <h4>Current Tags:</h4>
+        <h4>Tags:</h4>
         {% if current.tag_free == "yes"%} Free <br>{% endif %}
         {% if current.tag_sporty == "yes"%} Sporty<br>{% endif %}
         {% if current.tag_outdoor == "yes"%} Outdoors<br> {% endif %}
@@ -31,7 +31,7 @@
 
     <div class="col-md-4 col-md-offset-1 padding-top">
 
-          <label for="pals">Crew:</label><br>
+          <h4>Crew:</h4>
 
           {% for pal in pals %}
           {{pal.name}}<br>

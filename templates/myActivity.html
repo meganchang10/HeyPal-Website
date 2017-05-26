@@ -21,19 +21,19 @@
   <div class="row padding-top padding-bottom">
     <div class="col-md-12 padding-mini">
 
-        <a href="{{url_for('sendInvite',myActivity_id = current.id,user_id = user_id)}}">
+        <a href="{{url_for('sendInvite' ,myActivity_id = current.id, creator = creator)}}">
           <button class="btn btn-default" id="send-invite">
           <span class="glyphicon glyphicon-envelope"></span>Send Invite to Pals
           </button>
         </a>
 
-        <a href="{{url_for('editMyActivity', myActivity_id = current.id, user_id = user_id)}}">
+        <a href="{{url_for('editMyActivity', myActivity_id = current.id, creator = creator)}}">
           <button class="btn btn-default" id="edit-my-activity">
           <span class="glyphicon glyphicon-pencil"></span>Edit Activity
           </button>
         </a>
 
-        <a href="{{url_for('deleteMyActivity',myActivity_id = current.id,user_id = user_id)}}">
+        <a href="{{url_for('deleteMyActivity',myActivity_id = current.id, creator = creator)}}">
           <button class="btn btn-default" id="delete-my-activity">
           <span class="glyphicon glyphicon-trash"></span>Delete Activity
           </button>
@@ -56,7 +56,7 @@
         {% if current.tag_learn == "yes"%} Better Yourself<br> {% endif %}
         {% if current.tag_date_night == "yes"%} Date Night<br> {% endif %}
 
-        <img src="{{current.image}}" class="img-responsive activity-view" alt="{{current.name}} Image">
+        <img src="{{current.image}}" class="img-responsive" alt="{{current.name}} Image">
     </article>
     <p>&nbsp;</p>
     <p>&nbsp;</p>

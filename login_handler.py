@@ -10,6 +10,8 @@ from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 import requests
 
+from datetime import datetime
+
 
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
@@ -205,3 +207,4 @@ def getUserID(email):
 def getUserInfo(user_id):
     user = session.query(User).filter_by(id=user_id).one()
     return user
+

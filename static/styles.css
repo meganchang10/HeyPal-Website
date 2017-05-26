@@ -262,7 +262,7 @@ background: url("/static/logo.png");
 
 /* Activity photos on the Show All Activities */
 .activity-clip {
-    min-height: 200px;
+    height: 200px;
     overflow: hidden;
     background-position: left;
     background-size:cover;

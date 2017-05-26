@@ -1,4 +1,4 @@
-from database_setup import Base, Activity, MyActivity
+from database_setup import Base, Activity
 from flask import session as login_session
 from flask import flash
 
@@ -23,6 +23,7 @@ def performEdit(request, editActivity):
 
     editActivity.tag_free = tag_free
     editActivity.tag_sporty = tag_sporty
+
     editActivity.tag_outdoor = tag_outdoor
     editActivity.tag_special = tag_special
     editActivity.tag_learn = tag_learn
@@ -30,22 +31,6 @@ def performEdit(request, editActivity):
 
     flash("Activity Successfully Edited: %s" % editActivity.name)
     return editActivity
-
-
-# Specific to myActivity and activity
-def createMyActivity(request):
-    [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
-     tag_date_night] = checkBox.checkTags(request)
-
-    newMyActivity = MyActivity(
-        name=request.form['name'],
-        location=request.form['location'],
-        image=request.form['image'],
-        description=request.form['description'],
-        user_id=login_session['user_id'])
-
-    flash("New Activity Successfully Created: %s" % newMyActivity.name)
-    return newMyActivity
 
 
 def createActivity(request):
@@ -57,9 +42,7 @@ def createActivity(request):
         location=request.form['location'],
         image=request.form['image'],
         description=request.form['description'],
-        log_views=0,
-        adds_to_myActivities=0,
-        user_id=login_session['user_id'],
+        creator=login_session['user_id'],
         tag_free=tag_free,
         tag_sporty=tag_sporty,
         tag_outdoor=tag_outdoor,
@@ -73,12 +56,12 @@ def createActivity(request):
 
 
 def addToMy(activity):
-    myNewActivity = MyActivity(
+    myNewActivity = Activity(
         name=activity.name,
         location=activity.location,
         image=activity.image,
         description=activity.description,
-        user_id=login_session['user_id'],
+        creator=login_session['user_id'],
         tag_free=activity.tag_free,
         tag_sporty=activity.tag_sporty,
         tag_outdoor=activity.tag_outdoor,

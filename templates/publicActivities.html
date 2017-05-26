@@ -1,0 +1,63 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+
+<!-- FLASH CODE  -->
+<div class = 'flash'>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+      {% for message in messages %}
+      <li> <strong> {{ message }} </strong> </li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+</div>
+<!-- FLASH CODE  -->
+
+
+
+<!-- Here BEGINS the page specific code  -->
+
+
+  <div class="row padding-top padding-bottom">
+    <div class="col-md-3 padding-mini">
+      &nbsp;
+    </div>
+    <div class="col-md-6">
+      <span class="text-center"><h1 class="title">{{title}}</h1></span>
+    </div>
+    <div class="col-md-3">
+      <form name="filter_results" method='POST'>
+
+        <label for="tags">Filter Results:</label><br>
+        <select name="filter_results">
+
+          {% for tag in tags %}
+          <option value= "{{tag}}" {% if title == "tag" %}selected {% endif %}>{{tag}}</option>
+          {% endfor %}
+
+        </select>
+
+        <button type="submit">Filter</button>
+
+    </form>
+    </div>
+  </div>
+
+  {% for activity in activities %}
+
+    <article class="col-md-4 btn-default">
+      <a href="{{url_for('showActivity', activity_id=activity.id)}}">
+        <img src="{{activity.image}}" class="img-responsive activity-clip" alt="{{activity.name}} Image" >
+        <h4>{{activity.name}} @ {{activity.location}}</h4>
+      </a>
+    </article>
+
+  {% endfor %}
+
+  <!-- ENDS here  -->
+
+{% endblock %}
