@@ -75,6 +75,7 @@ class Pal(Base):
     name = Column(String(250))
     user_id = Column(Integer, ForeignKey('user.id'))
     pal_id = Column(Integer, ForeignKey('user.id'))
+    image = Column(String(250))
 
     user = relationship(User, foreign_keys=[user_id])
     pal = relationship(User, foreign_keys=[pal_id])

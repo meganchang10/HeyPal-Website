@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+  <div class="row divider blue">
+    <div class="col-md-12"></div>
+  </div>
+  <div class="row banner menu">
+    <div class="col-md-11 col-md-offset-1 padding-none">
+      <h1>{{current.name}}</h1>
+    </div>
+  </div>
+
+<!-- Just one activity  -->
+    <article class="col-md-6 col-md-offset-1 padding-top">
+      <img src="{{current.image}}" class="img-responsive activity-clip" alt="{{current.name}} Image">
+    </article>
+
+
+
+  <!-- ENDS here  -->
+
+{% endblock %}

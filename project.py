@@ -12,6 +12,8 @@ import json
 from functools import wraps
 from datetime import datetime
 
+#from flask_googlemaps import GoogleMaps
+
 import login_handler
 import logout_handler
 import activity_handler
@@ -20,6 +22,7 @@ import filterSearchResults
 
 
 app = Flask(__name__)
+#GoogleMaps(app, key="AIzaSyD0kr08XICKLriQiOgiDGUvWbp2GUpUbiQ")
 
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
@@ -410,6 +413,129 @@ def usersJSON():
     user = session.query(User).first()
     user.last_login = datetime.now
     return jsonify(All_Users=[a.serialize for a in users])
+
+
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+# Experimental add Friends
+
+@app.route('/heypal/myPals')
+@login_required
+def palsRedirect():
+    '''Redirects to Pals Page'''
+    user_id = login_session['user_id']
+    return redirect(url_for(
+        'showMyPals', user_id=user_id))
+
+
+@app.route('/heypal/<int:user_id>/myPals', methods=["GET", "POST"])
+@login_required
+def showMyPals(user_id):
+    '''Users can view their pals and add more pals to their network'''
+    if login_session['user_id'] != user_id:
+        flash("Only Authorized Users Can Access That Page")
+        return redirect("/")
+    myPals = session.query(Pal).filter_by(user_id=user_id).all()
+
+    pal_user_IDs = []
+    for pal in myPals:
+        pal_user_IDs.append(pal.pal_id)
+
+    notMyPals = session.query(User).filter(~User.id.in_(pal_user_IDs)).all()
+
+    #myPals = session.query(User).filter(User.id.in_(pal_user_IDs))
+    if request.method == "GET":
+        return render_template(
+            "myPals.html", myPals=myPals, notMyPals=notMyPals, user_id=user_id)
+
+
+@app.route('/heypal/<int:user_id>/<string:pal_id>/pal')
+@login_required
+def showMyFriendship(pal_id, user_id):
+    '''Users can view a friendship which will include photos and information
+    on HeyPal activities done together!'''
+    if login_session['user_id'] != user_id:
+        flash("Only Authorized Users Can Access That Page")
+        return redirect("/")
+    myPal = session.query(Pal).filter_by(pal_id=pal_id).one()
+    return render_template(
+        'pal.html', current=myPal, user_id=user_id)
+
+
+
+@app.route('/heypal/<int:user_id>/suggestedPals', methods=["GET", "POST"])
+@login_required
+def addPals(user_id):
+    '''Users can view their pals and add more pals to their network'''
+    if login_session['user_id'] != user_id:
+        flash("Only Authorized Users Can Access That Page")
+        return redirect("/")
+    myPals = session.query(Pal).filter_by(user_id=user_id).all()
+
+    pal_user_IDs = []
+    for pal in myPals:
+        pal_user_IDs.append(pal.pal_id)
+
+    notMyPals = session.query(User).filter(~User.id.in_(pal_user_IDs)).all()
+
+    #myPals = session.query(User).filter(User.id.in_(pal_user_IDs))
+    if request.method == "GET":
+        return render_template(
+            "suggestedPals.html", notMyPals=notMyPals, user_id=user_id)
+    else:
+        pal_id = request.form['id']
+        print(pal_id)
+        pal = session.query(User).filter_by(id=pal_id).one()
+        newPal = Pal(
+            name=pal.name,
+            user_id=user_id,
+            pal_id=pal_id
+            )
+        session.add(newPal)
+        session.commit()
+        return render_template(
+            "suggestedPals.html", notMyPals=notMyPals, user_id=user_id)
+
+
+
+
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+
+# Experimental Google Maps
+
+
+
+@app.route('/heypal/maps')
+def openMaps():
+    return render_template('maps.html')
+
+
+
+
+
+
+
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+
+
+
+
 
 
 # Login/Logout functions

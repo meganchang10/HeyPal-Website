@@ -39,17 +39,17 @@ session.commit()
 
 
 # Christa
-Pal1 = Pal(name="Christa", id=1, user_id=5, pal_id=2)
+Pal1 = Pal(name="Christa", id=1, user_id=5, pal_id=2, image= "/static/Christa.jpg")
 session.add(Pal1)
 session.commit()
 
 # David
-Pal1 = Pal(name = "David", id=2, user_id=5, pal_id=3)
+Pal1 = Pal(name = "David", id=2, user_id=5, pal_id=3, image= "/static/David.jpg")
 session.add(Pal1)
 session.commit()
 
 # Sam
-Pal1 = Pal(name = "Sam", id=3, user_id=5, pal_id=4)
+Pal1 = Pal(name = "Sam", id=3, user_id=5, pal_id=4, image= "/static/Sam.jpg")
 session.add(Pal1)
 session.commit()
 

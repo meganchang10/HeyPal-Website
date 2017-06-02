@@ -6,24 +6,36 @@
 
     <span>&nbsp;&nbsp;</span>
 
-    <a href="{{url_for('showMyActivitiesRedirect')}}">
-      <span class="glyphicon glyphicon-user" aria-hidden="true"></span>My Activities
+    <a href="{{url_for('openMaps')}}">
+      <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>Map
     </a>
 
   </div>
   <div class="col-md-6 text-right">
 
-      {%if 'username' in session %}
+      <a href="{{url_for('showMyActivitiesRedirect')}}">
+        <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>My Activities
+      </a>
+
+      <span>&nbsp;&nbsp;</span>
+
+      <a href="{{url_for('palsRedirect')}}">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Pals
+      </a>
+
+      <span>&nbsp;&nbsp;</span>
 
       <a href="{{url_for('invitesRedirect')}}">
         <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>Invites
       </a>
 
+      <span>&nbsp;&nbsp;</span>
+
+      {%if 'username' in session %}
+
       <a href="{{url_for('disconnect')}}">
         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>Logout
       </a>
-
-      <span>&nbsp;&nbsp;</span>
 
       {% else %}
 

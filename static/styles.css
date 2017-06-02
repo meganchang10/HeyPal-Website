@@ -260,6 +260,13 @@ background: url("/static/logo.png");
     text-align: center;
 }
 
+.pal-image {
+    height: 200px;
+    overflow: hidden;
+    background-position: left;
+    background-size:cover;
+}
+
 /* Activity photos on the Show All Activities */
 .activity-clip {
     height: 200px;

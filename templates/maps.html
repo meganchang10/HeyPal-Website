@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="HeyPal Google Maps API">
+    <meta name="author" content="Megan Chang">
+    <title> HeyPal Maps </title>
+
+    <!-- Latest compiled and minified CSS -->
+    <style type="text/css" src="{{
+  url_for('static', filename='map_styles.js') }}"></style>
+
+    <script type=text/javascript src="{{
+  url_for('static', filename='knockout.js') }}"></script>
+    <script type=text/javascript src="{{
+  url_for('static', filename='jquery.js') }}"></script>
+
+    <script type=text/javascript src="{{
+  url_for('static', filename='app.js') }}"></script>
+
+  </head>
+
+  <script type="text/javascript">
+  // Opens and closes the HeyPal activities list on the side by clicking the hamburger icon
+  // Allows for mobile responsiveness
+
+  function openHeyPalBar() {
+      document.getElementById("heyPalList").style.width = "300px";
+      document.getElementById("heyPalList").style.height = "100%";
+  }
+
+  function closeHeyPalBar() {
+      document.getElementById("heyPalList").style.width = "0";
+      document.getElementById("heyPalList").style.height = "0px";
+  }
+  </script>
+
+  <body>
+    <div id="map" class="my-map">
+    </div>
+  <!-- Search Bar -->
+
+
+    <!--list view-->
+    <div id="hamburger" onclick="openHeyPalBar()"> &nbsp; &#9776; HeyPal Menu
+    </div>
+    <div id="heyPalList" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeHeyPalBar()">&times;</a>
+      <h1>HeyPal Adventures!</h1>
+      <hr>
+      <div>
+        <input id="places-search" type="text" placeholder="Ex: Bottomless Mimosas" data-bind="textInput: query, valueUpdate: 'keyup'" >
+        <input id="go-places" type="button" value="Go">
+      </div>
+
+      <div class="list-view" data-bind="foreach: listItem">
+        <p class="list-item" data-bind="text: $data.name, click: $parent.listViewClick"></p>
+        <hr>
+      </div>
+    </div>
+
+
+    <script>
+    // Creates instance of the map
+      function initApp() {
+      "use strict";
+          initMap();
+          var app = new ViewModel();
+          ko.applyBindings(app);
+      }
+
+      // Opens and closes navbar for formatting purposes
+      openHeyPalBar();
+      closeHeyPalBar();
+    </script>
+
+    <script>
+      function googleError() {
+          alert('Google Maps could not be loaded.')
+      }
+    </script>
+
+    <script type=text/javascript src="{{
+  url_for('static', filename='map.js') }}"></script>
+  <script type=text/javascript src="{{
+  url_for('static', filename='app.js') }}"></script>
+
+  <script type=text/javascript src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0kr08XICKLriQiOgiDGUvWbp2GUpUbiQ&libraries=places&callback=initApp"></script>
+
+
+  </body>
+</html>
+

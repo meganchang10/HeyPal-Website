@@ -1,0 +1,65 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<!-- FLASH CODE  -->
+  <div class = 'flash'>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+<!-- FLASH CODE  -->
+
+  <div class="row padding-top padding-bottom">
+
+    <div class="col-md-3 padding-mini">
+      <a href="{{url_for('addPals', user_id=user_id)}}">
+      <button class="btn btn-default" id="new-pal">
+      <span class="glyphicon glyphicon-plus"></span>Add Pals
+      </button>
+      </a>
+    </div>
+
+    <div class="col-md-6">
+      <span class="text-center"><h1 class="title">My Pals</h1></span>
+    </div>
+
+    <div class="col-md-3">
+    </div>
+
+  </div>
+
+  {% for myPal in myPals %}
+
+    <article class="col-md-4 btn-default">
+      <a href="{{url_for('showMyFriendship', pal_id=myPal.pal_id, user_id=user_id)}}">
+        <img src="{{myPal.image}}" class="img-responsive pal-image" alt="{{myPal.name}} Image" >
+        <h4>{{myPal.name}}</h4>
+      </a>
+    </article>
+
+  {% endfor %}
+
+  {% for notMyPal in notMyPals %}
+
+    <h3>Suggested Pals to Add:</h3>
+
+    <article class="col-md-4 btn-default">
+        <img src="{{notMyPal.image}}" class="img-responsive pal-image" alt="{{notMyPal.name}} Image" >
+        <h4>{{notMyPal.name}}</h4>
+    </article>
+
+  {% endfor %}
+
+
+  <!-- ENDS here  -->
+
+{% endblock %}
+
