@@ -11,25 +11,88 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-6 col-md-offset-1 padding-top">
+
+  <form action="#" method = "post">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1 padding-top">
 
       <!-- The form allows us to receive input assigned to the value name -->
-      <form action="#" method = "post">
-        <div class="form-group">
 
           <label for="name">Name:</label>
-          <input type ="text" maxlength="50" class="form-control" name="name"placeholder="{{current.name}}">
+          <input type ="text" maxlength="50" class="form-control" name="name" placeholder="{{current.name}}">
 
           <p></p>
 
           <label for="location">Location:</label>
-          <input type ="text" maxlength="50" class="form-control" name="location"placeholder="{{current.location}}">
+          <input type ="text" maxlength="50" class="form-control" name="location" placeholder="{{current.location}}">
 
           <p></p>
 
+        </div>
+      </div>
+
+      <div class="row">
+
+        {% if current.datetime %}
+
+        <div class="col-md-2 col-md-offset-1">
+          <label for="date">Date:</label>
+          <input type ="text" maxlength="50" class="form-control" name="date" placeholder="{{current.datetime.month}}/{{current.datetime.strftime("%d")}}">
+        </div>
+
+        <div class="col-md-1">
+          <label for="date">Year:</label>
+          <input type ="text" maxlength="50" class="form-control" name="year" placeholder="{{current.datetime.strftime("%Y")[-2:]}}">
+        </div>
+
+        <div class="col-md-2">
+          <label for="datetime">Time:</label>
+          <input type ="text" maxlength="50" class="form-control" name="time" placeholder="{{current.datetime.strftime("%I:%M")}}">
+        </div>
+
+        <div class="col-md-1">
+          <label for="AMorPM">&nbsp;</label>
+          <select name="AMorPM">
+            <option value= "AM" {% if current.datetime.strftime("%p") == "AM" %}selected {% endif %}>AM</option>
+            <option value= "PM" {% if current.datetime.strftime("%p") == "PM" %}selected {% endif %}>PM</option>
+          </select>
+        </div>
+
+        {% else %}
+
+        <div class="col-md-2 col-md-offset-1">
+          <label for="date">Date:</label>
+          <input type ="text" maxlength="50" class="form-control" name="date" placeholder="MM/DD">
+        </div>
+
+        <div class="col-md-1">
+          <label for="date">Year:</label>
+          <input type ="text" maxlength="50" class="form-control" name="year" placeholder="YY">
+        </div>
+
+        <div class="col-md-2">
+          <label for="datetime">Time:</label>
+          <input type ="text" maxlength="50" class="form-control" name="time" placeholder="HH:MM">
+        </div>
+
+        <div class="col-md-1">
+          <label for="AMorPM">&nbsp;</label>
+          <select name="AMorPM">
+            <option value= "AM">AM</option>
+            <option value= "PM" selected>PM</option>
+          </select>
+        </div>
+
+        {% endif %}
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+
           <label for="image">Image:</label>
-          <input type ="text" maxlength="250" class="form-control" name="image"placeholder="{{current.image}}">
+          <input type ="text" maxlength="250" class="form-control" name="image" placeholder="{{current.image}}">
 
           <p></p>
 
@@ -55,7 +118,7 @@
           <span class="glyphicon glyphicon-flash"></span>Update Changes</button>
 
         </div>
-      </form>
+      </div>
     </div>
-  </div>
+  </form>
 {% endblock %}

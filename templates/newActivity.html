@@ -13,11 +13,15 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6 col-md-offset-1 padding-top">
+    The more specific the better! However everything in this form is optional.
+  </div>
+
+  <form action="#" method = "post">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1 padding-top">
 
       <!-- The form allows us to receive input assigned to the value name -->
-      <form action="#" method = "POST">
-        <div class="form-group">
 
           <label for="name">Name:</label>
           <input type ="text" maxlength="50" class="form-control" name="name" placeholder="Name of the activity">
@@ -28,6 +32,37 @@
           <input type ="text" maxlength="50" class="form-control" name="location" placeholder="Location of the activity">
 
           <p></p>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2 col-md-offset-1">
+          <label for="date">Date:</label>
+          <input type ="text" maxlength="50" class="form-control" name="date" placeholder="MM/DD">
+        </div>
+
+        <div class="col-md-1">
+          <label for="date">Year:</label>
+          <input type ="text" maxlength="50" class="form-control" name="year" placeholder="YY">
+        </div>
+
+        <div class="col-md-2">
+          <label for="datetime">Time:</label>
+          <input type ="text" maxlength="50" class="form-control" name="time" placeholder="HH:MM">
+        </div>
+
+        <div class="col-md-1">
+          <label for="AMorPM">&nbsp;</label>
+          <select name="AMorPM">
+            <option value= "AM">AM</option>
+            <option value= "PM" selected>PM</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1">
 
           <label for="image">Image:</label>
           <input type ="text" maxlength="250" class="form-control" name="image" placeholder="Image of the activity in url format (http://www.image.jpg)">
@@ -55,7 +90,7 @@
           <span class="glyphicon glyphicon-flash"></span>Create</button>
 
         </div>
-      </form>
+      </div>
     </div>
-  </div>
+  </form>
 {% endblock %}

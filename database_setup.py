@@ -56,6 +56,7 @@ class Activity(Base):
             'description': self.description,
             'image': self.image,
             'location': self.location,
+            'datetime': self.datetime,
             'log_views': self.log_views,
             'adds_to_myActivities': self.adds_to_myActivities,
             'creator': self.creator,
@@ -107,6 +108,7 @@ class Invite(Base):
     description = Column(String(250))
     image = Column(String)
     location = Column(String(250))
+    datetime = Column(DateTime)
 
     # tags
     tag_free = Column(String(3), default="no")
@@ -129,6 +131,7 @@ class Invite(Base):
             'description': self.description,
             'image': self.image,
             'location': self.location,
+            'datetime': self.datetime,
             'tag_free': self.tag_free,
             'tag_sporty': self.tag_sporty,
             'tag_outdoor': self.tag_outdoor,

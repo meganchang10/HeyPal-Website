@@ -23,6 +23,7 @@ def createInvite(activity, request, guest_id, invite_key):
     newInvite.image = activity.image
     newInvite.location = activity.location
     newInvite.description = activity.description
+    newInvite.datetime = activity.datetime
 
     newInvite.message = "Hey Pals! Who is down for this awesome activity?"
 

@@ -12,13 +12,13 @@
     </div>
   </div>
 
-  <div class="row">
+
+  <form action="#" method = "post">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1 padding-top">
+
     <!-- The form allows us to receive input assigned to the value name -->
-    <form action="#" method = "POST">
-
-      <div class="col-md-6 col-md-offset-1 padding-top">
-
-        <div class="form-group">
 
           <label for="name">Name:</label>
           <input type ="text" maxlength="50" class="form-control" name="name" placeholder="{{current.name}}">
@@ -29,6 +29,68 @@
           <input type ="text" maxlength="50" class="form-control" name="location" placeholder="{{current.location}}">
 
           <p></p>
+
+        </div>
+      </div>
+
+      <div class="row">
+
+        {% if current.datetime %}
+
+        <div class="col-md-2 col-md-offset-1">
+          <label for="date">Date:</label>
+          <input type ="text" maxlength="50" class="form-control" name="date" placeholder="{{current.datetime.month}}/{{current.datetime.strftime("%d")}}">
+        </div>
+
+        <div class="col-md-1">
+          <label for="date">Year:</label>
+          <input type ="text" maxlength="50" class="form-control" name="year" placeholder="{{current.datetime.strftime("%Y")[-2:]}}">
+        </div>
+
+        <div class="col-md-2">
+          <label for="datetime">Time:</label>
+          <input type ="text" maxlength="50" class="form-control" name="time" placeholder="{{current.datetime.strftime("%I:%M")}}">
+        </div>
+
+        <div class="col-md-1">
+          <label for="AMorPM">&nbsp;</label>
+          <select name="AMorPM">
+            <option value= "AM" {% if current.datetime.strftime("%p") == "AM" %}selected {% endif %}>AM</option>
+            <option value= "PM" {% if current.datetime.strftime("%p") == "PM" %}selected {% endif %}>PM</option>
+          </select>
+        </div>
+
+        {% else %}
+
+        <div class="col-md-2 col-md-offset-1">
+          <label for="date">Date:</label>
+          <input type ="text" maxlength="50" class="form-control" name="date" placeholder="MM/DD">
+        </div>
+
+        <div class="col-md-1">
+          <label for="date">Year:</label>
+          <input type ="text" maxlength="50" class="form-control" name="year" placeholder="YY">
+        </div>
+
+        <div class="col-md-2">
+          <label for="datetime">Time:</label>
+          <input type ="text" maxlength="50" class="form-control" name="time" placeholder="HH:MM">
+        </div>
+
+        <div class="col-md-1">
+          <label for="AMorPM">&nbsp;</label>
+          <select name="AMorPM">
+            <option value= "AM">AM</option>
+            <option value= "PM" selected>PM</option>
+          </select>
+        </div>
+
+        {% endif %}
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1">
 
           <label for="image">Image:</label>
           <input type ="text" maxlength="250" class="form-control" name="image" placeholder="{{current.image}}">
@@ -51,17 +113,9 @@
           <input type="checkbox" name="tag_learn" value="yes" {% if current.tag_learn == "yes"%}checked {% endif %}> Better Yourself<br>
           <input type="checkbox" name="tag_date_night" value="yes" {% if current.tag_date_night == "yes"%}checked {% endif %}> Date Night<br>
 
-          <p></p>
-
-          <button type="submit" class="btn btn-default" id="submit" type="submit">
-          <!-- A glyphicon is part of the bootstrap css package that includes 260 "glyphs" or icons like a music note or trash can for delete -->
-          <span class="glyphicon glyphicon-flash"></span>Send Invites</button>
-
         </div>
 
-      </div>
-
-      <div class="col-md-4 col-md-offset-1 padding-top">
+        <div class="col-md-6 col-md-offset-1 padding-top">
 
           <label for="pals">Pals to Invite:</label><br>
 
@@ -74,11 +128,16 @@
           <label for="message">Message:</label>
           <textarea class="form-control" maxlength="250" rows="3" name="message" placeholder= "Hey Pals! Who is down for this awesome activity?" ></textarea>
 
+          <p></p>
+
+          <button type="submit" class="btn btn-default" id="submit" type="submit">
+          <!-- A glyphicon is part of the bootstrap css package that includes 260 "glyphs" or icons like a music note or trash can for delete -->
+          <span class="glyphicon glyphicon-flash"></span>Send Invites</button>
+
+        </div>
       </div>
-
-    </form>
-
-  </div>
+    </div>
+  </form>
 {% endblock %}
 
 

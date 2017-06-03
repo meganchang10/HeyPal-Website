@@ -36,7 +36,14 @@
 <!-- Just one activity  -->
   <article class = "row">
     <div class="col-md-6">
-      <h1>{{current.name}} @ {{current.location}}</h1>
+      <h2>{{current.name}} @ {{current.location}}</h2>
+
+        {% if current.datetime %}
+        <p>Date: </p> {{current.datetime.strftime("%A, %B %d")}} <br>
+        &nbsp;
+        <p>Time: </p> {{current.datetime.strftime("%I:%M%p")}} <br>
+        &nbsp;
+        {% endif %}
 
         <p>Current Tags:</p>
         {% if current.tag_free == "yes"%} Free <br>{% endif %}
@@ -46,7 +53,7 @@
         {% if current.tag_learn == "yes"%} Better Yourself<br> {% endif %}
         {% if current.tag_date_night == "yes"%} Date Night<br> {% endif %}
 
-        <p>&nbsp;</p>
+        &nbsp;
         <img src="{{current.image}}" class="img-responsive" alt="{{current.name}} Image">
     </div>
   </article>

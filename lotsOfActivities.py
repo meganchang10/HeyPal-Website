@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -97,8 +99,16 @@ count += 1;
 session.add(Activity1)
 session.commit()
 
+year = 2017
+month = 7
+day = 1
+just_date = datetime(year, month, day)
 
-Activity1 = Activity(name = "Book Club", location = "Barnes and Noble", image = "http://www.carnegielibrary.org/wp-content/uploads/2017/01/SQH-Cookbook-Club_feature-image.jpg", description = "This month, we will be reading Seabiscuit by Laura Hillenbrand!", id = count, creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = "no", tag_free = "yes", tag_outdoor = "no", tag_special = "no", tag_learn = "yes", tag_date_night = "no")
+hour = 18
+minute = 30
+second = 0
+
+Activity1 = Activity(name = "Book Club", datetime = datetime(year, month, day, hour, minute, second), location = "Barnes and Noble", image = "http://www.carnegielibrary.org/wp-content/uploads/2017/01/SQH-Cookbook-Club_feature-image.jpg", description = "This month, we will be reading Seabiscuit by Laura Hillenbrand!", id = count, creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = "no", tag_free = "yes", tag_outdoor = "no", tag_special = "no", tag_learn = "yes", tag_date_night = "no")
 count += 1;
 session.add(Activity1)
 session.commit()

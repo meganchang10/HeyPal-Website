@@ -49,6 +49,13 @@
     <div class="col-md-6">
       <h1>{{current.name}} @ {{current.location}}</h1>
 
+        {% if current.datetime %}
+        <p>Date: </p> {{current.datetime.strftime("%A, %B %d")}} <br>
+        &nbsp;
+        <p>Time: </p> {{current.datetime.strftime("%I:%M%p")}} <br>
+        &nbsp;
+        {% endif %}
+
         <p>Current Tags:</p>
         {% if current.tag_free == "yes"%} Free <br>{% endif %}
         {% if current.tag_sporty == "yes"%} Sporty<br>{% endif %}
