@@ -27,31 +27,58 @@ session.add(User1)
 session.commit()
 
 
-User1 = User(name="Christa", email="changsta5@gmail.com", id=2)
+User1 = User(name="Christa Heinrich", email="changsta5@gmail.com", id=2, picture= "/static/img/Christa_Heinrich.jpg")
 session.add(User1)
 session.commit()
 
-User1 = User(name="David", email="david@gmail.com", id=3)
+User1 = User(name="David Childs", email="david@gmail.com", id=3, picture= "/static/img/David_Childs.jpg")
 session.add(User1)
 session.commit()
 
-User1 = User(name="Sam", email="sam@gmail.com", id=4)
+User1 = User(name="Sam Close", email="sam@gmail.com", id=4, picture= "/static/img/Sam_Close.jpg")
+session.add(User1)
+session.commit()
+
+User1 = User(name="Sam Delker", email="samd@gmail.com", id=5, picture= "/static/img/Sam_Delker.jpg")
+session.add(User1)
+session.commit()
+
+User1 = User(name="Sam Little", email="saml@gmail.com", id=6, picture= "/static/img/Sam_Little.jpg")
+session.add(User1)
+session.commit()
+
+User1 = User(name="Remster", email="remi@gmail.com", id=7, picture= "/static/img/Remster.jpg")
 session.add(User1)
 session.commit()
 
 
-# Christa
-Pal1 = Pal(name="Christa", id=1, user_id=5, pal_id=2, image= "/static/Christa.jpg")
+# Christa Heinrich
+Pal1 = Pal(name="Christa Heinrich", id=1, user_id=1, pal_id=2, image= "/static/img/Christa_Heinrich_pal.jpg")
 session.add(Pal1)
 session.commit()
 
-# David
-Pal1 = Pal(name = "David", id=2, user_id=5, pal_id=3, image= "/static/David.jpg")
+# David Childs
+Pal1 = Pal(name = "David Childs", id=2, user_id=1, pal_id=3, image= "/static/img/David_Childs_pal.jpg")
 session.add(Pal1)
 session.commit()
 
-# Sam
-Pal1 = Pal(name = "Sam", id=3, user_id=5, pal_id=4, image= "/static/Sam.jpg")
+# Sam Close
+Pal1 = Pal(name = "Sam Close", id=3, user_id=1, pal_id=4, image= "/static/img/Sam_Close_pal.jpg")
+session.add(Pal1)
+session.commit()
+
+# Sam Delker
+Pal1 = Pal(name = "Sam Delker", id=4, user_id=1, pal_id=5, image= "/static/img/Sam_Delker_pal.jpg")
+session.add(Pal1)
+session.commit()
+
+# Sam Little
+Pal1 = Pal(name = "Sam Little", id=5, user_id=1, pal_id=6, image= "/static/img/Sam_Little_pal.jpg")
+session.add(Pal1)
+session.commit()
+
+# Remi
+Pal1 = Pal(name = "Remster", id=6, user_id=1, pal_id=7, image= "/static/img/Remster_pal.jpg")
 session.add(Pal1)
 session.commit()
 

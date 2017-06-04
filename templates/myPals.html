@@ -20,7 +20,7 @@
   <div class="row padding-top padding-bottom">
 
     <div class="col-md-3 padding-mini">
-      <a href="{{url_for('addPals', user_id=user_id)}}">
+      <a href="{{url_for('showSuggestedPals', user_id=user_id)}}">
       <button class="btn btn-default" id="new-pal">
       <span class="glyphicon glyphicon-plus"></span>Add Pals
       </button>
@@ -43,17 +43,6 @@
         <img src="{{myPal.image}}" class="img-responsive pal-image" alt="{{myPal.name}} Image" >
         <h4>{{myPal.name}}</h4>
       </a>
-    </article>
-
-  {% endfor %}
-
-  {% for notMyPal in notMyPals %}
-
-    <h3>Suggested Pals to Add:</h3>
-
-    <article class="col-md-4 btn-default">
-        <img src="{{notMyPal.image}}" class="img-responsive pal-image" alt="{{notMyPal.name}} Image" >
-        <h4>{{notMyPal.name}}</h4>
     </article>
 
   {% endfor %}

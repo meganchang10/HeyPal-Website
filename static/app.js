@@ -118,7 +118,7 @@ function ViewModel() {
 
   // Adds click functionality to location list items
   self.listViewClick = function(location) {
-      if (location.name) {
+      if (location.fullName) {
           map.setZoom(15);
           map.panTo(location.position); // Focuses map view on selected marker when list item is clicked
           location.marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -137,8 +137,7 @@ function ViewModel() {
   self.query = ko.observable('');
   self.listItem = ko.computed(function () {
   return ko.utils.arrayFilter(self.locations(), function (listResult) {
-  var result = listResult.name.toLowerCase().indexOf(self.query().toLowerCase());
-  console.log(result);
+  var result = listResult.fullName.toLowerCase().indexOf(self.query().toLowerCase());
 
   // str.indexOf(searchValue)
   // If search value is an empty string, result = -1

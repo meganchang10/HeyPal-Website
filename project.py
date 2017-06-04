@@ -469,14 +469,14 @@ def showMyFriendship(pal_id, user_id):
 
 @app.route('/heypal/<int:user_id>/suggestedPals', methods=["GET", "POST"])
 @login_required
-def addPals(user_id):
+def showSuggestedPals(user_id):
     '''Users can view their pals and add more pals to their network'''
     if login_session['user_id'] != user_id:
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
     myPals = session.query(Pal).filter_by(user_id=user_id).all()
 
-    pal_user_IDs = []
+    pal_user_IDs = [user_id]
     for pal in myPals:
         pal_user_IDs.append(pal.pal_id)
 
@@ -486,19 +486,28 @@ def addPals(user_id):
     if request.method == "GET":
         return render_template(
             "suggestedPals.html", notMyPals=notMyPals, user_id=user_id)
-    else:
-        pal_id = request.form['id']
-        print(pal_id)
+
+
+@app.route(
+    '/heypal/<int:user_id>/<int:pal_id>/addPal/', methods=["POST"])
+@login_required
+def addPal(user_id, pal_id):
+    '''Add pal so you can invite them to activities!'''
+    if request.method == "POST":
         pal = session.query(User).filter_by(id=pal_id).one()
+
         newPal = Pal(
-            name=pal.name,
-            user_id=user_id,
-            pal_id=pal_id
+            name = pal.name,
+            user_id = user_id,
+            pal_id = pal.id,
+            image = pal.picture
             )
+
         session.add(newPal)
         session.commit()
-        return render_template(
-            "suggestedPals.html", notMyPals=notMyPals, user_id=user_id)
+
+        return redirect(url_for('showMyPals', user_id=user_id))
+
 
 
 
@@ -518,9 +527,6 @@ def addPals(user_id):
 @app.route('/heypal/maps')
 def openMaps():
     return render_template('maps.html')
-
-
-
 
 
 

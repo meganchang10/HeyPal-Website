@@ -57,8 +57,8 @@ def createActivity(request):
 
     print(2)
 
-    result = checkBox.checkDateTime(newActivity, request)
-    newActivity.datetime = result
+    datetime = checkBox.checkDateTime(newActivity, request)
+    newActivity.datetime = datetime
 
     flash("New Activity Successfully Created: %s" % newActivity.name)
     return newActivity

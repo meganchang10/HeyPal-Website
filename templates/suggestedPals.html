@@ -27,20 +27,22 @@
     </div>
   </div>
 
-  <h3>Suggested Pals to Add:</h3>
+
 
   {% for notMyPal in notMyPals %}
 
     <article class="col-md-4 btn-default">
-        <img src="{{notMyPal.image}}" class="img-responsive pal-image" alt="{{notMyPal.name}} Image" >
+        <img src="{{notMyPal.picture}}" class="img-responsive pal-image" alt="{{notMyPal.name}} Image" >
         <h4>{{notMyPal.name}}</h4>
 
-        <form action="/heypal/{{user_id}}/suggestedPals/" method = "POST">
-          <div class="form-group">
-          <button type="submit" class="btn btn-default" id="submit" name="{{notMyPal.id}}" value="{{notMyPal.id}}">
-          <span class="glyphicon glyphicon-plus"></span>Add Pal</button>
-          </div>
-        </form>
+        <a href="{{url_for('addPal', pal_id=notMyPal.id, user_id=user_id)}}">
+          <form action="/heypal/{{user_id}}/{{notMyPal.id}}/addPal/" method = "POST">
+            <div class="form-group">
+            <button type="submit" class="btn btn-default" id="submit" name="{{notMyPal.id}}" value="{{notMyPal.id}}">
+            <span class="glyphicon glyphicon-plus"></span>Add Pal</button>
+            </div>
+          </form>
+        </a>
 
     </article>
 
