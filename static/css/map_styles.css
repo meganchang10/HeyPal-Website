@@ -57,7 +57,7 @@ hr {
 
 .list-view p:hover {
     background-color: #fff;
-    color: #ff9000;
+    color: #ff8800;
     cursor: pointer;
 }
 
@@ -134,3 +134,16 @@ input[type=button]:focus {
     background-color: #5a8edd;
     color: #fff;
 }
+
+
+#content {
+    text-align: center;
+    font-family: serif;
+    max-height: 375px;
+}
+
+#content p {
+
+}
+
+

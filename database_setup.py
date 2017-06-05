@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -32,12 +32,15 @@ class Activity(Base):
     description = Column(String(250))
     image = Column(String)
     location = Column(String(250))
+    fullName = Column(String)
+    lat = Column(Float)
+    lng = Column(Float)
     log_views = Column(Integer, default=0)
     adds_to_myActivities = Column(Integer, default=0)
-    # date = Column(DateTime, default=datetime.datetime.utcnow)
+    datetime = Column(DateTime)
+
     creator = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
-    datetime = Column(DateTime)
 
     # tags
     tag_free = Column(String(3), default="no")
@@ -56,6 +59,8 @@ class Activity(Base):
             'description': self.description,
             'image': self.image,
             'location': self.location,
+            'lat': self.lat,
+            'lng': self.lng,
             'datetime': self.datetime,
             'log_views': self.log_views,
             'adds_to_myActivities': self.adds_to_myActivities,

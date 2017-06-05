@@ -394,7 +394,6 @@ def activitiesJSON():
     activities = session.query(Activity).all()
     return jsonify(All_Activities=[a.serialize for a in activities])
 
-
 @app.route('/heypal/pals/JSON')
 def palsJSON():
     pals = session.query(Pal).all()
@@ -522,11 +521,11 @@ def addPal(user_id, pal_id):
 
 # Experimental Google Maps
 
-
-
 @app.route('/heypal/maps')
 def openMaps():
-    return render_template('maps.html')
+    activities = session.query(Activity).all()
+    json = jsonify(All_Activities=[a.serialize for a in activities])
+    return render_template('maps.html', locations=json)
 
 
 

@@ -1,3 +1,4 @@
+
 var currentInfoWindow;
 
 
@@ -11,13 +12,14 @@ function ViewModel() {
   self.locations = ko.observableArray(locations);
 
   // Marker/icon style
-  var defaultIcon = makeMarkerIcon('ff9000');
-  var highlightedIcon = makeMarkerIcon('42f4f4');
+  var defaultIcon = makeMarkerIcon('ff8800');
+  var highlightedIcon = makeMarkerIcon('ff0000');
 
   // Creates a marker for each location in the locations array
   self.locations().forEach(function(location) {
+    var position = {lat:location.lat, lng:location.lng};
     var marker = new google.maps.Marker({
-      position: location.position,
+      position: position,
       map: map,
       title: location.title,
       URL: location.shortUrl,
@@ -64,31 +66,39 @@ function ViewModel() {
           if (website !== undefined) {
             websiteHTMLtag = '<a href="' +
               website +
-              '" target="_blank">Visit Website</a>' + '<br>';
+              '" target="_blank">Visit Website</a>';
           } else {
             websiteHTMLtag = "";
           }
 
           // Check that a website is on file at FourSquare. If so, create a photo tag for the url
-          // if not, do not add website option to info window
-          var photos = data.response.venue.photos.groups[0].items[0];
+          // if not, do not add website option to info window. For loop to get a few photos
+          var photos = data.response.venue.photos.groups[0].items;
           var photoHTMLtag;
 
           if (photos !== undefined) {
-            photoHTMLtag = '<img src="' +
-            photos.prefix + "100x100" + photos.suffix +
-            '">' + '<br>';
+            photoHTMLtag = '<div class="w3-content w3-display-container">';
+            var i;
+              for (i = 0; i < 5; i++) {
+                var img_tag = '<img class="mySlides" src="' +
+              photos[i].prefix + "300x300" + photos[i].suffix + '" style="width:100%">';
+                  photoHTMLtag += img_tag;
+              }
+            photoHTMLtag += '</div>';
           } else {
             photoHTMLtag = "";
           }
 
           // Info window contents, call upon contentString function to create appropriate HTML tags
           var infoWindow = new google.maps.InfoWindow({
+                maxWidth: 200,
+                maxHeight: 400,
                 content: contentString({
                   title: data.response.venue.name,
                   formattedAddress: data.response.venue.location.formattedAddress,
                   websiteHTMLtag: websiteHTMLtag,
-                  photoHTMLtag: photoHTMLtag
+                  photoHTMLtag: photoHTMLtag,
+                  phone: data.response.venue.contact.formattedPhone
                 })
           });
 
@@ -120,7 +130,22 @@ function ViewModel() {
   self.listViewClick = function(location) {
       if (location.fullName) {
           map.setZoom(15);
-          map.panTo(location.position); // Focuses map view on selected marker when list item is clicked
+          var position = {lat:location.lat, lng:location.lng};
+          map.panTo(position); // Focuses map view on selected marker when list item is clicked
+
+          /* Offsets pan so that marker is not centered anymore, it is offset so that the
+             info window can be more centered or when the screen is large enough, the
+             to include both the list and the map, we can center the info window in the
+             remaining map space */
+          var mq = window.matchMedia('(max-width: 550px)');
+          if(mq.matches) {
+            // If width is smaller than 550px
+            map.panBy(0,-225);
+          } else {
+            // If width is larger than 550px
+            map.panBy(-400,-225);
+          }
+
           location.marker.setAnimation(google.maps.Animation.BOUNCE);
            if (currentInfoWindow !== undefined) {
                          currentInfoWindow.close();
@@ -158,20 +183,19 @@ function contentString(location) {
   "use strict";
   return (
     '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<h1 id="firstHeading" class="firstHeading">' +
+      '<h2>' +
         location.title +
-      '</h1>'+
+      '</h2>'+
       '<div id="bodyContent">'+
         '<p>' +
         location.formattedAddress[0] + '<br>' +
         location.formattedAddress[1] + '<br>' +
-        location.formattedAddress[2] + '<br>' +
         '</p>' +
+        '<p>' +
+        location.websiteHTMLtag + '<br>' +
+        location.phone + '</p>' +
       '</div>' +
-      location.photoHTMLtag +
-      location.websiteHTMLtag +
+      location.photoHTMLtag + '<br>' +
     '</div>');
 }
 
