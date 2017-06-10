@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -43,12 +43,14 @@ class Activity(Base):
     user = relationship(User)
 
     # tags
-    tag_free = Column(String(3), default="no")
-    tag_sporty = Column(String(3), default="no")
-    tag_outdoor = Column(String(3), default="no")
-    tag_special = Column(String(3), default="no")
-    tag_learn = Column(String(3), default="no")
-    tag_date_night = Column(String(3), default="no")
+    tag_free = Column(Boolean, default=False)
+    tag_sporty = Column(Boolean, default=False)
+    tag_outdoor = Column(Boolean, default=False)
+    tag_special = Column(Boolean, default=False)
+    tag_learn = Column(Boolean, default=False)
+    tag_date_night = Column(Boolean, default=False)
+    tag_over_21 = Column(Boolean, default=False)
+    tag_after_work = Column(Boolean, default=False)
 
     @property
     def serialize(self):
@@ -71,6 +73,8 @@ class Activity(Base):
             'tag_special': self.tag_special,
             'tag_learn': self.tag_learn,
             'tag_date_night': self.tag_date_night,
+            'tag_over_21': self.tag_over_21,
+            'tag_after_work': self.tag_after_work,
         }
 
 
@@ -116,12 +120,14 @@ class Invite(Base):
     datetime = Column(DateTime)
 
     # tags
-    tag_free = Column(String(3), default="no")
-    tag_sporty = Column(String(3), default="no")
-    tag_outdoor = Column(String(3), default="no")
-    tag_special = Column(String(3), default="no")
-    tag_learn = Column(String(3), default="no")
-    tag_date_night = Column(String(3), default="no")
+    tag_free = Column(Boolean, default=False)
+    tag_sporty = Column(Boolean, default=False)
+    tag_outdoor = Column(Boolean, default=False)
+    tag_special = Column(Boolean, default=False)
+    tag_learn = Column(Boolean, default=False)
+    tag_date_night = Column(Boolean, default=False)
+    tag_over_21 = Column(Boolean, default=False)
+    tag_after_work = Column(Boolean, default=False)
 
     @property
     def serialize(self):
@@ -143,6 +149,8 @@ class Invite(Base):
             'tag_special': self.tag_special,
             'tag_learn': self.tag_learn,
             'tag_date_night': self.tag_date_night,
+            'tag_over_21': self.tag_over_21,
+            'tag_after_work': self.tag_after_work,
             }
 
 

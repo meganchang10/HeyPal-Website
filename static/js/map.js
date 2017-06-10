@@ -9,8 +9,6 @@ var locations = [
   {id: 5, name: 'Dancing', location: "O'Malley's", fullName: "Dancing @ O'Malley's", lat: 34.4172957, lng: -119.6964284, venue_id: "4aad9191f964a520e36020e3"},
 ];
 
-
-
 var map;
 
 // Creates a map instance that renders on screen

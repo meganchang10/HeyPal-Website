@@ -23,12 +23,14 @@
         {% endif %}
 
         <h4>Tags:</h4>
-        {% if current.tag_free == "yes"%} Free <br>{% endif %}
-        {% if current.tag_sporty == "yes"%} Sporty<br>{% endif %}
-        {% if current.tag_outdoor == "yes"%} Outdoors<br> {% endif %}
-        {% if current.tag_special == "yes"%} Special Occasions<br> {% endif %}
-        {% if current.tag_learn == "yes"%} Better Yourself<br> {% endif %}
-        {% if current.tag_date_night == "yes"%} Date Night<br> {% endif %}
+        {% if current.tag_free == True%} Free <br>{% endif %}
+        {% if current.tag_sporty == True%} Sporty<br>{% endif %}
+        {% if current.tag_outdoor == True%} Outdoors<br> {% endif %}
+        {% if current.tag_special == True%} Special Occasions<br> {% endif %}
+        {% if current.tag_learn == True%} Better Yourself<br> {% endif %}
+        {% if current.tag_date_night == True%} Date Night<br> {% endif %}
+        {% if current.tag_over_21 == True%} Over 21 Only<br> {% endif %}
+        {% if current.tag_after_work == True%} After Work<br> {% endif %}
 
         <img src="{{current.image}}" class="img-responsive" alt="{{current.name}} Image">
     </article>

@@ -51,10 +51,18 @@
         document.getElementById("heyPalList").style.width = "0";
         document.getElementById("heyPalList").style.height = "0px";
     }
+
+    function getLocations(locations) {
+      console.log(locations);
+    }
+
   </script>
+
+
 
   <script>
     // Creates instance of the map
+
     function initApp() {
     "use strict";
         initMap();
@@ -65,6 +73,9 @@
     // Opens and closes navbar for formatting purposes
     openHeyPalBar();
     //closeHeyPalBar();
+
+    getLocations(locations);
+
   </script>
 
   <script>

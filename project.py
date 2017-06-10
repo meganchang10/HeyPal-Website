@@ -36,7 +36,6 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 session1 = session
 
-
 # These wrapper functions allow us to quickly check the authentication of users
 def login_required(f):
     '''Wrapper function to redirect users to login page if necessary'''
@@ -78,7 +77,8 @@ def showActivities():
     # These tags allow users to perform searches that filter results based on
     # what sort of activity they are looking for
     tags = ["All Activities", "Free Activities", "Get Active", "Get Outdoors",
-            "Rainy Day", "Special Occasions", "Better Yourself", "Date Night"]
+            "Rainy Day", "Special Occasions", "Better Yourself", "Date Night",
+            "Over 21 Only", "After Work"]
 
     if request.method == "POST":
         # Check for filters
@@ -189,7 +189,8 @@ def showMyActivities(creator):
         return redirect("/")
     myActivities = session.query(Activity).filter_by(creator=creator).all()
     tags = ["My Activities", "Free Activities", "Get Active", "Get Outdoors",
-            "Rainy Day", "Special Occasions", "Better Yourself", "Date Night"]
+            "Rainy Day", "Special Occasions", "Better Yourself", "Date Night",
+            "Over 21 Only", "After Work"]
 
     if request.method == "POST":
         filter_results = request.form.get('filter_results')
@@ -360,7 +361,7 @@ def sendInvite(creator, myActivity_id):
             string.ascii_uppercase + string.digits) for x in xrange(20))
 
         for pal in pals:
-            if request.form.get(pal.name) == "yes":
+            if request.form.get(pal.name) == True:
                 newInvite = invite_handler.createInvite(
                     activity, request, pal.pal_id, invite_key)
                 session.add(newInvite)
@@ -525,7 +526,8 @@ def addPal(user_id, pal_id):
 def openMaps():
     activities = session.query(Activity).all()
     json = jsonify(All_Activities=[a.serialize for a in activities])
-    return render_template('maps.html', locations=json)
+
+    return render_template('maps.html', locations=activities, test="successful")
 
 
 

@@ -23,7 +23,7 @@ def performEdit(request, editActivity):
     editActivity.datetime = datetime
 
     [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
-     tag_date_night] = checkBox.checkTags(request)
+     tag_date_night, tag_over_21, tag_after_work] = checkBox.checkTags(request)
 
     editActivity.tag_free = tag_free
     editActivity.tag_sporty = tag_sporty
@@ -31,6 +31,8 @@ def performEdit(request, editActivity):
     editActivity.tag_special = tag_special
     editActivity.tag_learn = tag_learn
     editActivity.tag_date_night = tag_date_night
+    editActivity.tag_over_21 = tag_over_21
+    editActivity.tag_after_work = tag_after_work
 
     flash("Activity Successfully Edited: %s" % editActivity.name)
     return editActivity
@@ -39,7 +41,7 @@ def performEdit(request, editActivity):
 def createActivity(request):
 
     [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
-     tag_date_night] = checkBox.checkTags(request)
+     tag_date_night, tag_over_21, tag_after_work] = checkBox.checkTags(request)
 
     newActivity = Activity(
         name=request.form['name'],
@@ -53,6 +55,8 @@ def createActivity(request):
         tag_special=tag_special,
         tag_learn=tag_learn,
         tag_date_night=tag_date_night,
+        tag_over_21=activity.tag_over_21,
+        tag_after_work=activity.tag_after_work,
         )
 
     print(2)
@@ -78,6 +82,8 @@ def addToMy(activity):
         tag_special=activity.tag_special,
         tag_learn=activity.tag_learn,
         tag_date_night=activity.tag_date_night,
+        tag_over_21=activity.tag_over_21,
+        tag_after_work=activity.tag_after_work,
         )
 
     flash("%s Successfully Added to My Activities" % myNewActivity.name)

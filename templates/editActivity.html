@@ -103,12 +103,15 @@
 
           <p></p>
 
-          <input type="checkbox" name="tag_free" value="yes" {% if current.tag_free == "yes"%}checked {% endif %}> Free<br>
-          <input type="checkbox" name="tag_sporty" value="yes" {% if current.tag_sporty == "yes"%}checked {% endif %}> Sporty<br>
-          <input type="checkbox" name="tag_outdoor" value="yes" {% if current.tag_outdoor == "yes"%}checked {% endif %}> Outdoors<br>
-          <input type="checkbox" name="tag_special" value="yes" {% if current.tag_special == "yes"%}checked {% endif %}> Special Occasions<br>
-          <input type="checkbox" name="tag_learn" value="yes" {% if current.tag_learn == "yes"%}checked {% endif %}> Better Yourself<br>
-          <input type="checkbox" name="tag_date_night" value="yes" {% if current.tag_date_night == "yes"%}checked {% endif %}> Date Night<br>
+          <input type="checkbox" name="tag_free" value=True {% if current.tag_free == True%}checked {% endif %}> Free<br>
+          <input type="checkbox" name="tag_sporty" value=True {% if current.tag_sporty == True%}checked {% endif %}> Sporty<br>
+          <input type="checkbox" name="tag_outdoor" value=True {% if current.tag_outdoor == True%}checked {% endif %}> Outdoors<br>
+          <input type="checkbox" name="tag_special" value=True {% if current.tag_special == True%}checked {% endif %}> Special Occasions<br>
+          <input type="checkbox" name="tag_learn" value=True {% if current.tag_learn == True%}checked {% endif %}> Better Yourself<br>
+          <input type="checkbox" name="tag_date_night" value=True {% if current.tag_date_night == True%}checked {% endif %}> Date Night<br>
+          <input type="checkbox" name="tag_over_21" value=True {% if current.tag_over_21 == True%}checked {% endif %}> Over 21 Only<br>
+          <input type="checkbox" name="tag_after_work" value=True {% if current.tag_after_work == True%}checked {% endif %}> After Work<br>
+
 
           <p></p>
 

@@ -18,23 +18,29 @@ def activities(filter_results, user_id):
             Activity).filter_by(creator=1).all()
     elif filter_results == "Free Activities":
         activities = session.query(
-            Activity).filter_by(tag_free="yes", creator=user_id)
+            Activity).filter_by(tag_free=True, creator=user_id)
     elif filter_results == "Get Active":
         activities = session.query(
-            Activity).filter_by(tag_sporty="yes", creator=user_id)
+            Activity).filter_by(tag_sporty=True, creator=user_id)
     elif filter_results == "Get Outdoors":
         activities = session.query(
-            Activity).filter_by(tag_outdoor="yes", creator=user_id)
+            Activity).filter_by(tag_outdoor=True, creator=user_id)
     elif filter_results == "Rainy Day":
         activities = session.query(
-            Activity).filter_by(tag_outdoor="no", creator=user_id)
+            Activity).filter_by(tag_outdoor=False, creator=user_id)
     elif filter_results == "Special Occasions":
         activities = session.query(
-            Activity).filter_by(tag_special="yes", creator=user_id)
+            Activity).filter_by(tag_special=True, creator=user_id)
     elif filter_results == "Better Yourself":
         activities = session.query(
-            Activity).filter_by(tag_learn="yes", creator=user_id)
+            Activity).filter_by(tag_learn=True, creator=user_id)
     elif filter_results == "Date Night":
         activities = session.query(
-            Activity).filter_by(tag_date_night="yes", creator=user_id)
+            Activity).filter_by(tag_date_night=True, creator=user_id)
+    elif filter_results == "Over 21 Only":
+        activities = session.query(
+            Activity).filter_by(tag_over_21=True, creator=user_id)
+    elif filter_results == "After Work":
+        activities = session.query(
+            Activity).filter_by(tag_after_work=True, creator=user_id)
     return activities

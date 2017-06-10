@@ -5,7 +5,7 @@ from flask import session as login_session
 
 def createInvite(activity, request, guest_id, invite_key):
     [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
-     tag_date_night] = checkBox.checkTags(request)
+     tag_date_night, tag_over_21, tag_after_work] = checkBox.checkTags(request)
 
     newInvite = Invite(
         host=login_session['user_id'],
@@ -17,6 +17,8 @@ def createInvite(activity, request, guest_id, invite_key):
         tag_special=tag_special,
         tag_learn=tag_learn,
         tag_date_night=tag_date_night,
+        tag_over_21=tag_over_21,
+        tag_after_work=tag_after_work,
         )
 
     newInvite.name = activity.name
