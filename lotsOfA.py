@@ -105,8 +105,12 @@ count += 1;
 session.add(Activity1)
 session.commit()
 
-
-Activity1 = Activity(name = "Color Run", location = "State Street", image = "http://www.thecolorvibe.com/images/color-run-780x400-2A.jpg", id = count, creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = False, tag_free = False, tag_outdoor = True, tag_special = True, tag_learn = False, tag_date_night = False)
+year = 2017
+month = 7
+day = 1
+hour = 10
+minute = 30
+Activity1 = Activity(name = "Color Run", location = "State Street", image = "http://www.thecolorvibe.com/images/color-run-780x400-2A.jpg", id = count, datetime = datetime(year, month, day, hour, minute), creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = False, tag_free = False, tag_outdoor = True, tag_special = True, tag_learn = False, tag_date_night = False)
 count += 1;
 session.add(Activity1)
 session.commit()

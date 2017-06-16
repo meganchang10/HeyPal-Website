@@ -128,6 +128,7 @@ function ViewModel() {
 
   // Adds click functionality to location list items
   self.listViewClick = function(location) {
+      console.log(location);
       if (location.fullName) {
           map.setZoom(15);
           var position = {lat:location.lat, lng:location.lng};

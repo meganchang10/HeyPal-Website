@@ -62,9 +62,7 @@ def clearance_level_required(f):
 
 
 # Show all activities
-@app.route('/')
-@app.route('/activities')
-@app.route('/heypal/activities/')
+@app.route('/', methods=["GET", "POST"])
 @app.route('/heypal/', methods=["GET", "POST"])
 def showActivities():
     '''Performs a search query that returns all available public activities
@@ -381,8 +379,48 @@ def sendInvite(creator, myActivity_id):
             'sendInvite.html', current=activity, pals=pals)
 
 
+
+
+
+
+@app.route('/heypal/test')
+def test():
+    content = activityJSON(1)
+    ans = content.Activity.lat
+    print(ans)
+    return render_template('test.html', content=ans)
+
 # JSON functions
 ###############################################################################
+
+def activityJSON(activity_id):
+    activity = session.query(Activity).filter_by(id=activity_id).one()
+    return jsonify(Activity=activity.serialize)
+
+
+def activitiesJSON():
+    activities = session.query(Activity).all()
+    return jsonify(All_Activities=[a.serialize for a in activities])
+
+
+def palsJSON():
+    pals = session.query(Pal).all()
+    return jsonify(All_Pals=[a.serialize for a in pals])
+
+
+def invitesJSON():
+    invites = session.query(Invite).all()
+    return jsonify(All_Invites=[a.serialize for a in invites])
+
+
+def usersJSON():
+    users = session.query(User).all()
+    user = session.query(User).first()
+    user.last_login = datetime.now
+    return jsonify(All_Users=[a.serialize for a in users])
+
+
+
 
 @app.route('/heypal/activity/<int:activity_id>/JSON')
 def activityJSON(activity_id):
@@ -394,6 +432,7 @@ def activityJSON(activity_id):
 def activitiesJSON():
     activities = session.query(Activity).all()
     return jsonify(All_Activities=[a.serialize for a in activities])
+
 
 @app.route('/heypal/pals/JSON')
 def palsJSON():
@@ -413,6 +452,7 @@ def usersJSON():
     user = session.query(User).first()
     user.last_login = datetime.now
     return jsonify(All_Users=[a.serialize for a in users])
+
 
 
 ###############################################################################
@@ -524,10 +564,8 @@ def addPal(user_id, pal_id):
 
 @app.route('/heypal/maps')
 def openMaps():
-    activities = session.query(Activity).all()
-    json = jsonify(All_Activities=[a.serialize for a in activities])
-
-    return render_template('maps.html', locations=activities, test="successful")
+    locations = activitiesJSON()
+    return render_template('maps.html', locations=locations, test="successful")
 
 
 
