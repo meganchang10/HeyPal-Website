@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify, json
 from flask import url_for, flash
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -380,47 +380,8 @@ def sendInvite(creator, myActivity_id):
 
 
 
-
-
-
-@app.route('/heypal/test')
-def test():
-    content = activityJSON(1)
-    ans = content.Activity.lat
-    print(ans)
-    return render_template('test.html', content=ans)
-
 # JSON functions
 ###############################################################################
-
-def activityJSON(activity_id):
-    activity = session.query(Activity).filter_by(id=activity_id).one()
-    return jsonify(Activity=activity.serialize)
-
-
-def activitiesJSON():
-    activities = session.query(Activity).all()
-    return jsonify(All_Activities=[a.serialize for a in activities])
-
-
-def palsJSON():
-    pals = session.query(Pal).all()
-    return jsonify(All_Pals=[a.serialize for a in pals])
-
-
-def invitesJSON():
-    invites = session.query(Invite).all()
-    return jsonify(All_Invites=[a.serialize for a in invites])
-
-
-def usersJSON():
-    users = session.query(User).all()
-    user = session.query(User).first()
-    user.last_login = datetime.now
-    return jsonify(All_Users=[a.serialize for a in users])
-
-
-
 
 @app.route('/heypal/activity/<int:activity_id>/JSON')
 def activityJSON(activity_id):
@@ -452,6 +413,7 @@ def usersJSON():
     user = session.query(User).first()
     user.last_login = datetime.now
     return jsonify(All_Users=[a.serialize for a in users])
+
 
 
 
@@ -564,8 +526,7 @@ def addPal(user_id, pal_id):
 
 @app.route('/heypal/maps')
 def openMaps():
-    locations = activitiesJSON()
-    return render_template('maps.html', locations=locations, test="successful")
+    return render_template('maps.html')
 
 
 

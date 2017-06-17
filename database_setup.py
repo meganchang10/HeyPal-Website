@@ -33,6 +33,7 @@ class Activity(Base):
     image = Column(String)
     location = Column(String(250))
     fullName = Column(String)
+    venue_id = Column(String)
     lat = Column(Float)
     lng = Column(Float)
     log_views = Column(Integer, default=0)
@@ -59,6 +60,7 @@ class Activity(Base):
             'id': self.id,
             'name': self.name,
             'description': self.description,
+            'fullName': self.fullName,
             'image': self.image,
             'location': self.location,
             'lat': self.lat,
@@ -75,6 +77,7 @@ class Activity(Base):
             'tag_date_night': self.tag_date_night,
             'tag_over_21': self.tag_over_21,
             'tag_after_work': self.tag_after_work,
+            'venue_id': self.venue_id
         }
 
 

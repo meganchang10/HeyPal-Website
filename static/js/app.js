@@ -58,21 +58,42 @@ function ViewModel() {
         async: true,
         success: function(data) {
 
-          // Check that website is on file at FourSquare. If so, create an HTML a tag for the url
-          // if not, do not add website option to info window
+          // Check that information is on file at FourSquare. If so, create an HTML tag
+          // if not, add "" so that undefined doesn't show
+
+          // title
+          var title = data.response.venue.name;
+          var titleTag;
+
+          if (title !== undefined) {
+            titleTag = title;
+          } else {
+            titleTag = "Sorry No Info Available";
+          }
+
+          // address
+          var address = data.response.venue.location.formattedAddress;
+          var addressTag;
+
+          if (address !== undefined) {
+            addressTag = address;
+          } else {
+            addressTag = "";
+          }
+
+          // website
           var website = data.response.venue.url;
           var websiteHTMLtag;
 
           if (website !== undefined) {
             websiteHTMLtag = '<a href="' +
               website +
-              '" target="_blank">Visit Website</a>';
+              '" target="_blank">Visit Website</a>' + '<br>';
           } else {
             websiteHTMLtag = "";
           }
 
-          // Check that a website is on file at FourSquare. If so, create a photo tag for the url
-          // if not, do not add website option to info window. For loop to get a few photos
+          // photos
           var photos = data.response.venue.photos.groups[0].items;
           var photoHTMLtag;
 
@@ -89,16 +110,28 @@ function ViewModel() {
             photoHTMLtag = "";
           }
 
+
+          // phone
+          var phone = data.response.venue.contact.formattedPhone;
+          var phoneTag;
+
+          if (phone !== undefined) {
+            phoneTag = phone;
+          } else {
+            phoneTag = "";
+          }
+
+
           // Info window contents, call upon contentString function to create appropriate HTML tags
           var infoWindow = new google.maps.InfoWindow({
                 maxWidth: 200,
                 maxHeight: 400,
                 content: contentString({
-                  title: data.response.venue.name,
-                  formattedAddress: data.response.venue.location.formattedAddress,
+                  title: titleTag,
+                  formattedAddress: addressTag,
                   websiteHTMLtag: websiteHTMLtag,
                   photoHTMLtag: photoHTMLtag,
-                  phone: data.response.venue.contact.formattedPhone
+                  phone: phoneTag
                 })
           });
 
@@ -193,7 +226,7 @@ function contentString(location) {
         location.formattedAddress[1] + '<br>' +
         '</p>' +
         '<p>' +
-        location.websiteHTMLtag + '<br>' +
+        location.websiteHTMLtag +
         location.phone + '</p>' +
       '</div>' +
       location.photoHTMLtag + '<br>' +
