@@ -27,12 +27,13 @@ session.commit()
 lat = "34.40234809999999"
 lng = "-119.69934519999998"
 venue_id = "4b12f540f964a5209d9123e3"
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key = 1
 Activity1 = Activity(fullName = "Volleyball @ Leadbetter Beach", name = "Volleyball", location = "Leadbetter Beach", lat = lat, lng = lng, venue_id = venue_id, image = "http://www.smart-magazine.com/content/uploads/2015/08/Beachvolleyball-Berlin-Smart-Magazine-8.jpg", id = id_key, creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = True, tag_free = True, tag_outdoor = True, tag_special = False, tag_learn = False, tag_date_night = False, tag_over_21= False, tag_after_work = False)
 session.add(Activity1)
 session.commit()
 
 
+id_key += 1
 lat = "34.434987"
 lng = "-119.720438"
 venue_id = "4c30fa2e3896e21ea05de690"
@@ -46,12 +47,13 @@ Activity1 = Activity(fullName = "Color Run @ State Street", name = "Color Run", 
 session.add(Activity1)
 session.commit()
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+
+id_key += 1
 Activity1 = Activity(fullName = "Board Game Night @ Home", name = "Board Game Night", location = "Home", lat = lat, lng = lng, venue_id = venue_id, image = "http://thefederalist.com/wp-content/uploads/2013/12/boardgame.jpg", id = id_key, creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = False, tag_free = True, tag_outdoor = False, tag_special = False, tag_learn = False, tag_date_night = False, tag_over_21= False, tag_after_work = True)
 session.add(Activity1)
 session.commit()
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.4406028"
 lng = "-119.82875519999999"
 venue_id = "4b19d3ebf964a520f3e423e3"
@@ -59,7 +61,7 @@ Activity1 = Activity(fullName = "Bowl @ Zodo's", name = "Bowl", location = "Zodo
 session.add(Activity1)
 session.commit()
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "38.782089"
 lng = "-104.880013"
 venue_id = "4ba65abcf964a5209a4939e3"
@@ -77,13 +79,13 @@ minute = 30
 second = 0
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 Activity1 = Activity(fullName = "Book Club @ Barnes & Noble", name = "Book Club", datetime = datetime(year, month, day, hour, minute, second), location = "Barnes and Noble", lat = lat, lng = lng, venue_id = venue_id, image = "http://www.carnegielibrary.org/wp-content/uploads/2017/01/SQH-Cookbook-Club_feature-image.jpg", description = "This month, we will be reading Seabiscuit by Laura Hillenbrand!", id = id_key, creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = False, tag_free = True, tag_outdoor = False, tag_special = False, tag_learn = True, tag_date_night = False, tag_over_21= False, tag_after_work = True)
 session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.420132"
 lng = "-119.700534"
 venue_id = "4b12f540f964a5209d9123e3"
@@ -92,7 +94,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.4245789"
 lng = "-119.70656459999998"
 venue_id = "4b368cb0f964a520c43725e3"
@@ -101,7 +103,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.412320"
 lng = "-119.855228"
 venue_id = venue_id
@@ -110,7 +112,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.427788"
 lng = "-119.874786"
 venue_id = "4b09cf4ff964a520011e23e3"
@@ -119,7 +121,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.406830"
 lng = "-119.548594"
 venue_id = "4ba7e90af964a520ebbd39e3"
@@ -130,7 +132,7 @@ session.commit()
 
 ##############
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.406830"
 lng = "-119.548594"
 venue_id = "4ba7e90af964a520ebbd39e3"
@@ -139,7 +141,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.40234809999999"
 lng = "-119.69934519999998"
 venue_id = "4b12f540f964a5209d9123e3"
@@ -148,7 +150,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.434987"
 lng = "-119.720438"
 venue_id = "4c30fa2e3896e21ea05de690"
@@ -157,7 +159,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.419097"
 lng = "-119.697454"
 venue_id = "4af1284bf964a520cae021e3"
@@ -166,7 +168,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.409981"
 lng = "-119.685586"
 venue_id = "4aac6892f964a520dd5d20e3"
@@ -175,7 +177,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.407901"
 lng = "-119.878953"
 venue_id = "4aedf7c9f964a520bdd021e3"
@@ -185,7 +187,7 @@ session.commit()
 
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))lat = "34.501956"
+id_key += 1
 lng = "-119.864723"
 venue_id = "4bf851fcb182c9b63c4c775a"
 Activity1 = Activity(fullName = "Jump on Rocks @ Lizard's Mouth", name = "Jump on Rocks", location = "Lizard's Mouth", lat = lat, lng = lng, venue_id = venue_id, image = "http://images.summitpost.org/original/578604.JPG", id = id_key, creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = True, tag_free = True, tag_outdoor = True, tag_special = False, tag_learn = False, tag_date_night = False, tag_over_21= False, tag_after_work = False)
@@ -193,7 +195,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.424003"
 lng = "-119.702085"
 venue_id = "4b3fc68bf964a5207bae25e3"
@@ -202,7 +204,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.423657"
 lng = "-119.889897"
 venue_id = "4ea5e5a19a524accd15aea0d"
@@ -211,8 +213,7 @@ session.add(Activity1)
 session.commit()
 
 
-
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))lat = "34.438329"
+id_key += 1
 lng = "-119.714059"
 venue_id = "4b2548c3f964a520556f24e3"
 Activity1 = Activity(fullName = "Explore @ SB Mission", name = "Explore", location = "SB Mission", lat = lat, lng = lng, venue_id = venue_id, image = "http://www.travelingwithmj.com/wp-content/uploads/2010/11/Mission-Santa-Barbara-also-known-as-Queen-of-the-Missions-for-its-graceful-beauty..jpg", id = id_key, creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = False, tag_free = True, tag_outdoor = True, tag_special = False, tag_learn = True, tag_date_night = True, tag_over_21= False, tag_after_work = False)
@@ -220,7 +221,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.606235"
 lng = "-120.176565"
 venue_id = "4b2d65def964a520c9d524e3"
@@ -229,7 +230,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.416834"
 lng = "-119.832210"
 venue_id = "4a8851dff964a520de0520e3"
@@ -238,7 +239,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.418266"
 lng = "-119.848966"
 venue_id = "4aeccdc5f964a52059cb21e3"
@@ -248,7 +249,7 @@ session.commit()
 
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.418266"
 lng = "-119.848966"
 venue_id = "4aeccdc5f964a52059cb21e3"
@@ -257,8 +258,7 @@ session.add(Activity1)
 session.commit()
 
 
-
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.4099896"
 lng = "-119.6855694999"
 venue_id = "4e220b75fa761d671082ff1b"
@@ -267,7 +267,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.4225655999"
 lng = "-119.7054617999"
 venue_id = "4b51496af964a520d64927e3"
@@ -276,7 +276,7 @@ session.add(Activity1)
 session.commit()
 
 
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
+id_key += 1
 lat = "34.4099896"
 lng = "-119.6855694999"
 venue_id = "4e220b75fa761d671082ff1b"
