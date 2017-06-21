@@ -42,7 +42,6 @@ month = 7
 day = 1
 hour = 10
 minute = 30
-id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
 Activity1 = Activity(fullName = "Color Run @ State Street", name = "Color Run", location = "State Street", lat = lat, lng = lng, venue_id = venue_id, image = "http://www.thecolorvibe.com/images/color-run-780x400-2A.jpg", id = id_key, datetime = datetime(year, month, day, hour, minute), creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = False, tag_free = False, tag_outdoor = True, tag_special = True, tag_learn = False, tag_date_night = False, tag_over_21= False, tag_after_work = False)
 session.add(Activity1)
 session.commit()
