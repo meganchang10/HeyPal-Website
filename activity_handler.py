@@ -1,6 +1,8 @@
 from database_setup import Base, Activity
 from flask import session as login_session
 from flask import flash
+import string
+import random
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -45,7 +47,9 @@ def createActivity(request):
     [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
      tag_date_night, tag_over_21, tag_after_work] = checkBox.checkTags(request)
 
+    id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
     newActivity = Activity(
+        id=id_key,
         name=request.form['name'],
         location=request.form['location'],
         venue_id=request.form['venue_id'],
@@ -70,7 +74,9 @@ def createActivity(request):
 
 
 def addToMy(activity):
+    id_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(20))
     myNewActivity = Activity(
+        id=id_key,
         name=activity.name,
         fullName=activity.fullName,
         location=activity.location,
