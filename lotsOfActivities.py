@@ -20,6 +20,9 @@ DBSession = sessionmaker(bind=engine)
 # session.rollback()
 session = DBSession()
 
+User1 = User(name="Megan Chang", email="meganchang10@gmail.com",id = 1)
+session.add(User1)
+session.commit()
 
 lat = "34.40234809999999"
 lng = "-119.69934519999998"
