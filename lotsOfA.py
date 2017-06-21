@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 from database_setup import Activity, Base, Pal, User
 
-engine = create_engine('sqlite:///heypal.db')
+engine = create_engine('postgresql://heypal:PASSWORD@localhost/heypal')
 # Bind the engine to the metadata of the Base class so that the
 # declaratives can be accessed through a DBSession instance
 Base.metadata.bind = engine
@@ -338,7 +338,7 @@ session.commit()
 
 
 lat = "34.4099896"
-lng = "-119.68556949999999"
+lng = "-119.6855694999"
 venue_id = "4e220b75fa761d671082ff1b"
 Activity1 = Activity(fullName = "Wine Tasting @ Deep Sea Tasting Room", name = "Wine Tasting", location = "Deep Sea", lat = lat, lng = lng, venue_id = venue_id, image = "https://media-cdn.tripadvisor.com/media/photo-s/07/8b/79/e7/another-great-shot.jpg", id = count, creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = False, tag_free = False, tag_outdoor = True, tag_special = False, tag_learn = False, tag_date_night = True, tag_over_21= True, tag_after_work = True)
 count += 1;
@@ -346,8 +346,8 @@ session.add(Activity1)
 session.commit()
 
 
-lat = "34.42256559999999"
-lng = "-119.70546179999997"
+lat = "34.4225655999"
+lng = "-119.7054617999"
 venue_id = "4b51496af964a520d64927e3"
 Activity1 = Activity(fullName = "Appetizers @ Milk & Honey", name = "Appetizers", location = "Milk & Honey", lat = lat, lng = lng, venue_id = venue_id, image = "http://urbandiningguide.com/wp-content/uploads/2015/11/milkhoneysantabarbara.jpg", id = count, creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = False, tag_free = False, tag_outdoor = True, tag_special = False, tag_learn = False, tag_date_night = True, tag_over_21= False, tag_after_work = True)
 count += 1;
@@ -355,7 +355,7 @@ session.add(Activity1)
 session.commit()
 
 lat = "34.4099896"
-lng = "-119.68556949999999"
+lng = "-119.6855694999"
 venue_id = "4e220b75fa761d671082ff1b"
 Activity1 = Activity(fullName = "Dancing @ O'Malley's", name = "Dancing", location = "O'Malley's", lat = lat, lng = lng, venue_id = venue_id, image = "http://www.retale.com/blog/shared/content/uploads/2016/02/dive-bar-3.jpg", id = count, creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = False, tag_free = False, tag_outdoor = True, tag_special = False, tag_learn = False, tag_date_night = True, tag_over_21= True, tag_after_work = True)
 count += 1;

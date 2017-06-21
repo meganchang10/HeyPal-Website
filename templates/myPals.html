@@ -39,7 +39,7 @@
   {% for myPal in myPals %}
 
     <article class="col-md-4 btn-default">
-      <a href="{{url_for('showMyFriendship', pal_id=myPal.pal_id, user_id=user_id)}}">
+      <a href="{{url_for('showMyFriendship', pal_id=myPal.id, user_id=user_id)}}">
         <img src="{{myPal.image}}" class="img-responsive pal-image" alt="{{myPal.name}} Image" >
         <h4>{{myPal.name}}</h4>
       </a>

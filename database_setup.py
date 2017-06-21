@@ -12,7 +12,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
-    picture = Column(String(250))
+    picture = Column(String(250), default="http://donatered-asset.s3.amazonaws.com/assets/default/default_user-884fcb1a70325256218e78500533affb.jpg")
 
     @property
     def serialize(self):
@@ -157,7 +157,13 @@ class Invite(Base):
             }
 
 
-engine = create_engine('sqlite:///heypal.db')
+# Connect to Database and create database session
+# Originally used sqlite
+# engine = create_engine('sqlite:///heypal.db')
+# For the live website, use postgresql
+# This line must be changed in 4 files: database_setup.py, project.py or __init__.py, lotsOfA.py and filterSearchResults.py and login_handler.py
+engine = create_engine('postgresql://heypal:PASSWORD@localhost/heypal')
+
 Base.metadata.create_all(engine)
 
 

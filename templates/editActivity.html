@@ -89,6 +89,30 @@
       </div>
 
       <div class="row">
+
+      {% if current.lat %}
+
+        <div class="col-md-6 col-md-offset-1">
+          <label for="venue_id">Foursquare_Venue_ID:</label>
+          <input type ="text" maxlength="50" class="form-control" name="venue_id" placeholder="{{current.venue_id}}">
+        </div>
+
+      </div>
+
+      {% else %}
+
+        <div class="col-md-6 col-md-offset-1">
+          <label for="venue_id">Foursquare_Venue_ID:</label>
+          <input type ="text" maxlength="50" class="form-control" name="venue_id" placeholder="Look up Foursquare Venue ID">
+        </div>
+
+      </div>
+
+      {% endif %}
+
+      </div>
+
+      <div class="row">
         <div class="col-md-6 col-md-offset-1">
 
           <label for="image">Image:</label>
@@ -112,9 +136,7 @@
           <input type="checkbox" name="tag_over_21" value=True {% if current.tag_over_21 == True%}checked {% endif %}> Over 21 Only<br>
           <input type="checkbox" name="tag_after_work" value=True {% if current.tag_after_work == True%}checked {% endif %}> After Work<br>
 
-
           <p></p>
-
 
           <button type="submit" class="btn btn-default" id="submit" type="submit">
           <!-- A glyphicon is part of the bootstrap css package that includes 260 "glyphs" or icons like a music note or trash can for delete -->

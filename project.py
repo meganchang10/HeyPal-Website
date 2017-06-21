@@ -12,8 +12,6 @@ import json
 from functools import wraps
 from datetime import datetime
 
-#from flask_googlemaps import GoogleMaps
-
 import login_handler
 import logout_handler
 import activity_handler
@@ -22,15 +20,21 @@ import filterSearchResults
 
 
 app = Flask(__name__)
-#GoogleMaps(app, key="AIzaSyD0kr08XICKLriQiOgiDGUvWbp2GUpUbiQ")
+
+# Must use relative path for LIVE website
+# This change must be implemented in 2 files: project.py or __init__.py and login_handler
+# Original format:
+#CLIENT_ID = json.loads(
+#    open('client_secrets.json', 'r').read())['web']['client_id']
 
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open('/var/www/HeyPal/heypal/client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Hey Pal"
 
 
 # Connect to Database and create database session
-engine = create_engine('sqlite:///heypal.db')
+engine = create_engine('postgresql://heypal:PASSWORD@localhost/heypal')
+
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
@@ -395,10 +399,27 @@ def activitiesJSON():
     return jsonify(All_Activities=[a.serialize for a in activities])
 
 
+@app.route('/heypal/publicActivities/JSON')
+def publicActivitiesJSON():
+    activities = session.query(Activity).filter_by(creator=1).all()
+    return jsonify(All_Activities=[a.serialize for a in activities])
+
+
 @app.route('/heypal/pals/JSON')
 def palsJSON():
     pals = session.query(Pal).all()
     return jsonify(All_Pals=[a.serialize for a in pals])
+
+
+@app.route('/heypal/suggestedPals/JSON')
+def suggestedPalsJSON():
+    user_id = login_session['user_id']
+    pal_user_IDs = [user_id]
+    for pal in myPals:
+        pal_user_IDs.append(pal.pal_id)
+
+    notMyPals = session.query(User).filter(~User.id.in_(pal_user_IDs)).all()
+    return jsonify(Suggested_Pals=[a.serialize for a in notMyPals])
 
 
 @app.route('/heypal/invites/JSON')
@@ -416,14 +437,8 @@ def usersJSON():
 
 
 
-
+# Pals
 ###############################################################################
-###############################################################################
-###############################################################################
-###############################################################################
-###############################################################################
-###############################################################################
-# Experimental add Friends
 
 @app.route('/heypal/myPals')
 @login_required
@@ -443,19 +458,13 @@ def showMyPals(user_id):
         return redirect("/")
     myPals = session.query(Pal).filter_by(user_id=user_id).all()
 
-    pal_user_IDs = []
-    for pal in myPals:
-        pal_user_IDs.append(pal.pal_id)
-
-    notMyPals = session.query(User).filter(~User.id.in_(pal_user_IDs)).all()
-
     #myPals = session.query(User).filter(User.id.in_(pal_user_IDs))
     if request.method == "GET":
         return render_template(
-            "myPals.html", myPals=myPals, notMyPals=notMyPals, user_id=user_id)
+            "myPals.html", myPals=myPals, user_id=user_id)
 
 
-@app.route('/heypal/<int:user_id>/<string:pal_id>/pal')
+@app.route('/heypal/<int:user_id>/<int:pal_id>/pal')
 @login_required
 def showMyFriendship(pal_id, user_id):
     '''Users can view a friendship which will include photos and information
@@ -463,10 +472,9 @@ def showMyFriendship(pal_id, user_id):
     if login_session['user_id'] != user_id:
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
-    myPal = session.query(Pal).filter_by(pal_id=pal_id).one()
+    myPal = session.query(Pal).filter_by(id=pal_id).one()
     return render_template(
         'pal.html', current=myPal, user_id=user_id)
-
 
 
 @app.route('/heypal/<int:user_id>/suggestedPals', methods=["GET", "POST"])
@@ -499,10 +507,10 @@ def addPal(user_id, pal_id):
         pal = session.query(User).filter_by(id=pal_id).one()
 
         newPal = Pal(
-            name = pal.name,
-            user_id = user_id,
-            pal_id = pal.id,
-            image = pal.picture
+            name=pal.name,
+            user_id=user_id,
+            pal_id=pal.id,
+            image=pal.picture
             )
 
         session.add(newPal)
@@ -511,37 +519,10 @@ def addPal(user_id, pal_id):
         return redirect(url_for('showMyPals', user_id=user_id))
 
 
-
-
-
-###############################################################################
-###############################################################################
-###############################################################################
-###############################################################################
-###############################################################################
-###############################################################################
-###############################################################################
-
-# Experimental Google Maps
-
+# Google Maps API integration
 @app.route('/heypal/maps')
 def openMaps():
     return render_template('maps.html')
-
-
-
-
-###############################################################################
-###############################################################################
-###############################################################################
-###############################################################################
-###############################################################################
-###############################################################################
-###############################################################################
-
-
-
-
 
 
 # Login/Logout functions

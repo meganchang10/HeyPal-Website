@@ -2,7 +2,8 @@ from database_setup import Base, Activity
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
-engine = create_engine('sqlite:///heypal.db')
+# Connect to Database and create database session
+engine = create_engine('postgresql://heypal:PASSWORD@localhost/heypal')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)

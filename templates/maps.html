@@ -63,7 +63,7 @@
     //gets the location JSON information from my python project.py file
     var locations = null;
     $.ajax({
-      url: '/heypal/activities/JSON',
+      url: '/heypal/publicActivities/JSON',
       async: false,
       dataType: 'json',
       success: function (data) {
@@ -89,8 +89,6 @@
     // Opens and closes navbar for formatting purposes
     openHeyPalBar();
     //closeHeyPalBar();
-
-    //getLocations({{locations}});
 
   </script>
 

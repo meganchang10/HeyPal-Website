@@ -1,7 +1,6 @@
 
 var currentInfoWindow;
 
-
 function ViewModel() {
 "use strict";
 
@@ -17,7 +16,11 @@ function ViewModel() {
 
   // Creates a marker for each location in the locations array
   self.locations().forEach(function(location) {
-    var position = {lat:location.lat, lng:location.lng};
+    if (location.lat !== null && location.lng !== null) {
+
+
+    var position = {lat: location.lat, lng:location.lng};
+
     var marker = new google.maps.Marker({
       position: position,
       map: map,
@@ -49,114 +52,115 @@ function ViewModel() {
     var CLIENT_SECRET = '&client_secret=QQ41HPQQ2ETSRUW30NVV3TWLKNF2CD1KHZNQK2V4RJPQKV4P';
     var version = '&v=20170531';
 
-  /* Foursquare API ajax request */
-    $.ajax({
-        type: "GET",
-        dataType: 'json',
-        cache: false,
-        url: 'https://api.foursquare.com/v2/venues/' + location.venue_id + CLIENT_ID + CLIENT_SECRET + version,
-        async: true,
-        success: function(data) {
+            /* Foursquare API ajax request */
+              $.ajax({
+                  type: "GET",
+                  dataType: 'json',
+                  cache: false,
+                  url: 'https://api.foursquare.com/v2/venues/' + location.venue_id + CLIENT_ID + CLIENT_SECRET + version,
+                  async: true,
+                  success: function(data) {
 
-          // Check that information is on file at FourSquare. If so, create an HTML tag
-          // if not, add "" so that undefined doesn't show
+                    // Check that information is on file at FourSquare. If so, create an HTML tag
+                    // if not, add "" so that undefined doesn't show
 
-          // title
-          var title = data.response.venue.name;
-          var titleTag;
+                    // title
+                    var title = data.response.venue.name;
+                    var titleTag;
 
-          if (title !== undefined) {
-            titleTag = title;
-          } else {
-            titleTag = "Sorry No Info Available";
-          }
+                    if (title !== undefined) {
+                      titleTag = title;
+                    } else {
+                      titleTag = "Sorry No Info Available";
+                    }
 
-          // address
-          var address = data.response.venue.location.formattedAddress;
-          var addressTag;
+                    // address
+                    var address = data.response.venue.location.formattedAddress;
+                    var addressTag;
 
-          if (address !== undefined) {
-            addressTag = address;
-          } else {
-            addressTag = "";
-          }
+                    if (address !== undefined) {
+                      addressTag = address;
+                    } else {
+                      addressTag = "";
+                    }
 
-          // website
-          var website = data.response.venue.url;
-          var websiteHTMLtag;
+                    // website
+                    var website = data.response.venue.url;
+                    var websiteHTMLtag;
 
-          if (website !== undefined) {
-            websiteHTMLtag = '<a href="' +
-              website +
-              '" target="_blank">Visit Website</a>' + '<br>';
-          } else {
-            websiteHTMLtag = "";
-          }
+                    if (website !== undefined) {
+                      websiteHTMLtag = '<a href="' +
+                        website +
+                        '" target="_blank">Visit Website</a>' + '<br>';
+                    } else {
+                      websiteHTMLtag = "";
+                    }
 
-          // photos
-          var photos = data.response.venue.photos.groups[0].items;
-          var photoHTMLtag;
+                    // photos
+                    var photos = data.response.venue.photos.groups[0].items;
+                    var photoHTMLtag;
 
-          if (photos !== undefined) {
-            photoHTMLtag = '<div class="w3-content w3-display-container">';
-            var i;
-              for (i = 0; i < 5; i++) {
-                var img_tag = '<img class="mySlides" src="' +
-              photos[i].prefix + "300x300" + photos[i].suffix + '" style="width:100%">';
-                  photoHTMLtag += img_tag;
+                    if (photos !== undefined) {
+                      photoHTMLtag = '<div class="w3-content w3-display-container">';
+                      var i;
+                        for (i = 0; i < 5; i++) {
+                          var img_tag = '<img class="mySlides" src="' +
+                        photos[i].prefix + "300x300" + photos[i].suffix + '" style="width:100%">';
+                            photoHTMLtag += img_tag;
+                        }
+                      photoHTMLtag += '</div>';
+                    } else {
+                      photoHTMLtag = "";
+                    }
+
+
+                    // phone
+                    var phone = data.response.venue.contact.formattedPhone;
+                    var phoneTag;
+
+                    if (phone !== undefined) {
+                      phoneTag = phone;
+                    } else {
+                      phoneTag = "";
+                    }
+
+
+                    // Info window contents, call upon contentString function to create appropriate HTML tags
+                    var infoWindow = new google.maps.InfoWindow({
+                          maxWidth: 200,
+                          maxHeight: 400,
+                          content: contentString({
+                            title: titleTag,
+                            formattedAddress: addressTag,
+                            websiteHTMLtag: websiteHTMLtag,
+                            photoHTMLtag: photoHTMLtag,
+                            phone: phoneTag
+                          })
+                    });
+
+                  location.infoWindow = infoWindow;
+
+                  location.marker.addListener('click', function () {
+                      if (currentInfoWindow !== undefined) {
+                              currentInfoWindow.close();
+                      }
+                      currentInfoWindow = location.infoWindow;
+                      location.infoWindow.open(map, this);
+
+                      // Bounce markers when clicked with timer function to stop bounce after 1500 miliseconds
+                      location.marker.setAnimation(google.maps.Animation.BOUNCE);
+                      setTimeout(function () {
+                              location.marker.setAnimation(null);
+                      }, 1500);
+                  });
+              },
+
+              // If there is an error in loading foursquare data, alert user
+              error: function(data) {
+                    alert("Could not load data from foursquare.");
               }
-            photoHTMLtag += '</div>';
-          } else {
-            photoHTMLtag = "";
-          }
-
-
-          // phone
-          var phone = data.response.venue.contact.formattedPhone;
-          var phoneTag;
-
-          if (phone !== undefined) {
-            phoneTag = phone;
-          } else {
-            phoneTag = "";
-          }
-
-
-          // Info window contents, call upon contentString function to create appropriate HTML tags
-          var infoWindow = new google.maps.InfoWindow({
-                maxWidth: 200,
-                maxHeight: 400,
-                content: contentString({
-                  title: titleTag,
-                  formattedAddress: addressTag,
-                  websiteHTMLtag: websiteHTMLtag,
-                  photoHTMLtag: photoHTMLtag,
-                  phone: phoneTag
-                })
-          });
-
-        location.infoWindow = infoWindow;
-
-        location.marker.addListener('click', function () {
-            if (currentInfoWindow !== undefined) {
-                    currentInfoWindow.close();
-            }
-            currentInfoWindow = location.infoWindow;
-            location.infoWindow.open(map, this);
-
-            // Bounce markers when clicked with timer function to stop bounce after 1500 miliseconds
-            location.marker.setAnimation(google.maps.Animation.BOUNCE);
-            setTimeout(function () {
-                    location.marker.setAnimation(null);
-            }, 1500);
-        });
-    },
-
-    // If there is an error in loading foursquare data, alert user
-    error: function(data) {
-          alert("Could not load data from foursquare.");
+            });
     }
-    });
   });
 
   // Adds click functionality to location list items
@@ -196,19 +200,23 @@ function ViewModel() {
   self.query = ko.observable('');
   self.listItem = ko.computed(function () {
   return ko.utils.arrayFilter(self.locations(), function (listResult) {
-  var result = listResult.fullName.toLowerCase().indexOf(self.query().toLowerCase());
+    if (listResult.lat !== null && listResult.lng !== null) {
+      var result = listResult.fullName.toLowerCase().indexOf(self.query().toLowerCase());
 
-  // str.indexOf(searchValue)
-  // If search value is an empty string, result = -1
-  // If search value is not empty, result = 0
-  if (result === -1) {
-      listResult.marker.setVisible(false);
-      } else {
-      listResult.marker.setVisible(true);
-      }
-      return result >= 0;
+      // str.indexOf(searchValue)
+      // If search value is an empty string, result = -1
+      // If search value is not empty, result = 0
+      if (result === -1) {
+          listResult.marker.setVisible(false);
+          } else {
+          listResult.marker.setVisible(true);
+          }
+          return result >= 0;
+
+          }
+
+          });
       });
-  });
 
 }
 
