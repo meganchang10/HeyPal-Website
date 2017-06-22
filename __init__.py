@@ -115,53 +115,6 @@ def showActivity(activity_id):
         return render_template('publicActivity.html', current=activity)
 
 
-# Create a new activity
-@app.route('/heypal/new', methods=["GET", "POST"])
-@login_required
-@clearance_level_required
-def newActivity():
-    '''Authorized users can create new public activities for the main page'''
-    if request.method == "POST":
-        newActivity = activity_handler.createActivity(request)
-        session.add(newActivity)
-        session.commit()
-        return redirect(url_for('showActivities', title="All Activities"))
-    else:
-        return render_template("newActivity.html")
-
-
-@app.route('/heypal/<int:activity_id>/edit/', methods=["GET", "POST"])
-@clearance_level_required
-def editActivity(activity_id):
-    '''Authorized users can edit public activities to update the title,
-    location, image, description, etc.'''
-    editActivity = session.query(Activity).filter_by(id=activity_id).one()
-    creator = editActivity.creator
-    if login_session['user_id'] != creator:
-        flash("Only Authorized Users Can Access That Page")
-        return redirect("/")
-    if request.method == "POST":
-        editActivity = activity_handler.performEdit(request, editActivity)
-        session.add(editActivity)
-        session.commit()
-        return redirect(url_for('showActivities', title="All Activities"))
-    else:
-        return render_template('editActivity.html', current=editActivity)
-
-
-@app.route('/heypal/<int:activity_id>/delete/', methods=["GET", "POST"])
-@clearance_level_required
-def deleteActivity(activity_id):
-    '''Authorized users can delete public activity entries on the main page'''
-    deleteActivity = session.query(Activity).filter_by(id=activity_id).one()
-    if request.method == "POST":
-        session.delete(deleteActivity)
-        session.commit()
-        flash("Activity Successfully Deleted: %s" % deleteActivity.name)
-        return redirect(url_for('showActivities', title="All Activities"))
-    else:
-        return render_template("deleteActivity.html", current=deleteActivity)
-
 
 ###############################################################################
 ###############################################################################
@@ -365,9 +318,9 @@ def sendInvite(creator, myActivity_id):
             string.ascii_uppercase + string.digits) for x in xrange(20))
 
         for pal in pals:
-            if request.form.get(pal.name) == True:
+            if request.form.get(pal.name):
                 newInvite = invite_handler.createInvite(
-                    activity, request, pal.pal_id, invite_key)
+                    activity, request, pal.id, invite_key)
                 session.add(newInvite)
                 session.commit()
 
