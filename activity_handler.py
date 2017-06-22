@@ -19,8 +19,7 @@ def performEdit(request, editActivity):
         editActivity.image = request.form['image']
     if request.form['location']:
         editActivity.location = request.form['location']
-    if request.form['venue_id']:
-        editActivity.venue_id = request.form['venue_id']
+
 
     # datetime info
     datetime = checkBox.checkDateTime(editActivity, request)
@@ -47,10 +46,14 @@ def createActivity(request):
     [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
      tag_date_night, tag_over_21, tag_after_work] = checkBox.checkTags(request)
 
+    fullNameString = request.form['name'] + " @ " + request.form['location']
     newActivity = Activity(
         name=request.form['name'],
         location=request.form['location'],
         venue_id=request.form['venue_id'],
+        lat=request.form['lat'],
+        lng=request.form['lng'],
+        fullName=fullNameString,
         image=request.form['image'],
         description=request.form['description'],
         creator=login_session['user_id'],
@@ -76,9 +79,9 @@ def addToMy(activity):
         name=activity.name,
         fullName=activity.fullName,
         location=activity.location,
+        venue_id=activity.venue_id,
         lat=activity.lat,
         lng=activity.lng,
-        venue_id=activity.venue_id,
         datetime=activity.datetime,
         image=activity.image,
         description=activity.description,
