@@ -432,8 +432,6 @@ def invitesJSON():
 @app.route('/heypal/users/JSON')
 def usersJSON():
     users = session.query(User).all()
-    user = session.query(User).first()
-    user.last_login = datetime.now
     return jsonify(All_Users=[a.serialize for a in users])
 
 

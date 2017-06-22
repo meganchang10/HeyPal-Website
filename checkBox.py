@@ -17,10 +17,8 @@ def checkTags(request):
 
 def checkDateTime(current, request):
     result = None
-    print(1)
     if current.datetime:
         if current.datetime.month:
-            print(2)
             month = current.datetime.month
         if current.datetime.strftime("%d"):
             day = int(current.datetime.strftime("%d"))
@@ -39,7 +37,6 @@ def checkDateTime(current, request):
         minute = 0
 
     if request.form['date']:
-        print(5)
         dateString = request.form['date'].split("/")
         month = int(dateString[0])
         day = int(dateString[1])
@@ -51,15 +48,18 @@ def checkDateTime(current, request):
         result = datetime(year, month, day)
 
     if request.form['time']:
+        timeString = request.form['time'].split(":")
+        hour = int(timeString[0])
+        if request.form['AMorPM'] == "PM":
+            hour += 12
+        if len(timeString) == 2:
+            minute = int(timeString[1])
+
         if request.form['date']:
-            timeString = request.form['time'].split(":")
-            hour = int(timeString[0])
-            if request.form['AMorPM'] == "PM":
-                hour += 12
-            if len(timeString) == 2:
-                minute = int(timeString[1])
                 result = datetime(year, month, day, hour, minute)
+        elif current.datetime:
+            result = datetime(current.year, current.month, current.day, hour, minute)
         else:
-            flash("Date required to set time.")
+            flash("Date required to set time. FALSE:")
 
     return result
