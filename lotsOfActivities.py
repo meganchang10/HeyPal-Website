@@ -20,6 +20,11 @@ DBSession = sessionmaker(bind=engine)
 # session.rollback()
 session = DBSession()
 
+# Create dummy user
+User1 = User(name="Megan Chang", email="meganchang10@gmail.com")
+session.add(User1)
+session.commit()
+
 lat = "34.40234809999999"
 lng = "-119.69934519999998"
 venue_id = "4b12f540f964a5209d9123e3"
@@ -223,7 +228,7 @@ session.commit()
 lat = "34.418266"
 lng = "-119.848966"
 venue_id = "4aeccdc5f964a52059cb21e3"
-Activity1 = Activity(fullName = "Diving Competition @ UCSB Rec Cen", name = "Diving Competition", location = "UCSB Rec Cen", lat = lat, lng = lng, venue_id = venue_id, image = "https://cdn-s3.si.com/s3fs-public/si/dam/assets/13/07/30/130730105748-belly-flop-ap04031704055-single-image-cut.jpg", creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = True, tag_free = True, tag_outdoor = True, tag_special = False, tag_learn = False, tag_date_night = False, tag_over_21= False, tag_after_work = False)
+Activity1 = Activity(fullName = "Diving Comp @ UCSB Rec Cen", name = "Diving Comp", location = "UCSB Rec Cen", lat = lat, lng = lng, venue_id = venue_id, image = "https://cdn-s3.si.com/s3fs-public/si/dam/assets/13/07/30/130730105748-belly-flop-ap04031704055-single-image-cut.jpg", creator =1, log_views = 0, adds_to_myActivities = 0, tag_sporty = True, tag_free = True, tag_outdoor = True, tag_special = False, tag_learn = False, tag_date_night = False, tag_over_21= False, tag_after_work = False)
 session.add(Activity1)
 session.commit()
 
