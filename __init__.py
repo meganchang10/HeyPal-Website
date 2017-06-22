@@ -320,7 +320,7 @@ def sendInvite(creator, myActivity_id):
         for pal in pals:
             if request.form.get(pal.name):
                 newInvite = invite_handler.createInvite(
-                    activity, request, pal.id, invite_key)
+                    activity, request, pal.pal_id, invite_key)
                 session.add(newInvite)
                 session.commit()
 

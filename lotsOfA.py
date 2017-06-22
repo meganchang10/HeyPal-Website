@@ -22,7 +22,7 @@ session = DBSession()
 
 
 # Create dummy user
-User1 = User(name="Megan Chang", email="meganchang10@gmail.com",id = 1)
+User1 = User(name="Megan Chang GMAIL TEST", email="meganchang10@gmail.com",id = 1)
 session.add(User1)
 session.commit()
 
