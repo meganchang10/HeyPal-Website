@@ -122,8 +122,7 @@ def showActivity(activity_id):
 def newActivity():
     '''Authorized users can create new public activities for the main page'''
     if request.method == "POST":
-        new_id = session.query(func.max(Activity.id)) + 1
-        newActivity = activity_handler.createActivity(request, new_id)
+        newActivity = activity_handler.createActivity(request)
         session.add(newActivity)
         session.commit()
         return redirect(url_for('showActivities', title="All Activities"))
@@ -233,8 +232,7 @@ def addToMyActivities(activity_id):
         session.add(activity)
         session.commit()
 
-        new_id = session.query(func.max(Activity.id)) + 1
-        myNewActivity = activity_handler.addToMy(activity, new_id)
+        myNewActivity = activity_handler.addToMy(activity)
         session.add(myNewActivity)
         session.commit()
 
@@ -250,8 +248,7 @@ def newMyActivity(creator):
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
     if request.method == "POST":
-        new_id = session.query(func.max(Activity.id)) + 1
-        newMyActivity = activity_handler.createActivity(request, new_id)
+        newMyActivity = activity_handler.createActivity(request)
         session.add(newMyActivity)
         session.commit()
         return redirect(url_for(

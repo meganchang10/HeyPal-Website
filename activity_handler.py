@@ -42,13 +42,12 @@ def performEdit(request, editActivity):
     return editActivity
 
 
-def createActivity(request, new_id):
+def createActivity(request):
 
     [tag_free, tag_sporty, tag_outdoor, tag_special, tag_learn,
      tag_date_night, tag_over_21, tag_after_work] = checkBox.checkTags(request)
 
     newActivity = Activity(
-        id=new_id,
         name=request.form['name'],
         location=request.form['location'],
         venue_id=request.form['venue_id'],
@@ -72,9 +71,8 @@ def createActivity(request, new_id):
     return newActivity
 
 
-def addToMy(activity, new_id):
+def addToMy(activity):
     myNewActivity = Activity(
-        id=new_id,
         name=activity.name,
         fullName=activity.fullName,
         location=activity.location,
