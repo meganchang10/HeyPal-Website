@@ -190,7 +190,8 @@ def showMyActivities(creator):
     if login_session['user_id'] != creator:
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
-    myActivities = session.query(Activity).filter_by(creator=creator).all()
+    myActivities = session.query(Activity).filter_by(creator=creator).order_by(
+        Activity.log_views.desc()).all()
     tags = ["My Activities", "Free Activities", "Get Active", "Get Outdoors",
             "Rainy Day", "Special Occasions", "Better Yourself", "Date Night",
             "Over 21 Only", "After Work"]

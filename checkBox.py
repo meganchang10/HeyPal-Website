@@ -58,7 +58,7 @@ def checkDateTime(current, request):
         if request.form['date']:
                 result = datetime(year, month, day, hour, minute)
         elif current.datetime:
-            result = datetime(current.year, current.month, current.day, hour, minute)
+            result = datetime(current.datetime.year, current.datetime.month, current.datetime.day, hour, minute)
         else:
             flash("Date required to set time. FALSE:")
 
