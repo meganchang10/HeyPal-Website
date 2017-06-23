@@ -318,7 +318,7 @@ def sendInvite(creator, myActivity_id):
 
         flash("Invitations have been sent!")
         return redirect(url_for(
-            'showMyActivities', creator=creator, title="My Activities"))
+            "showMyInvites", myInvites=myInvites, creator=creator))
     else:
         pals = session.query(Pal).filter_by(user_id=creator).all()
         return render_template(
@@ -326,12 +326,12 @@ def sendInvite(creator, myActivity_id):
 
 
 @app.route(
-    '/heypal/<int:creator>/<int:invite_id>/delete/',
+    '/heypal/<int:user_id>/<int:invite_id>/delete/',
     methods=["GET", "POST"])
-def deleteInvite(invite_id, creator):
+def deleteInvite(invite_id, user_id):
     '''Users can remove an activity from their My Activity page'''
     # Authorization required
-    if login_session['user_id'] != creator:
+    if login_session['user_id'] != user_id:
         flash("Only Authorized Users Can Access That Page")
         return redirect("/")
 
@@ -343,7 +343,7 @@ def deleteInvite(invite_id, creator):
         session.commit()
         flash("Invite Successfully Deleted: %s" % deleteInvite.name)
         return redirect(url_for(
-            'showMyInvites', user_id=creator))
+            'showMyInvites', user_id=user_id))
     else:
         return render_template(
             "deleteInvite.html", current=deleteInvite)
