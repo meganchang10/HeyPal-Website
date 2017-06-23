@@ -41,6 +41,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 session1 = session
 
+
 # These wrapper functions allow us to quickly check the authentication of users
 def login_required(f):
     '''Wrapper function to redirect users to login page if necessary'''
@@ -48,20 +49,6 @@ def login_required(f):
     def wrapper(*args, **kwargs):
         if "username" not in login_session:
             return redirect('/login')
-        return f(*args, **kwargs)
-    return wrapper
-
-
-def clearance_level_required(f):
-    '''Wrapper function to alert users if they are trying to access restricted
-     area'''
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        if "username" not in login_session:
-            return redirect('/login')
-        if login_session['user_id'] != 1:
-            flash("Only Authorized Users Can Access That Page")
-            return redirect("/")
         return f(*args, **kwargs)
     return wrapper
 
@@ -469,6 +456,18 @@ def addPal(user_id, pal_id):
         session.add(newPal)
         session.commit()
 
+        user = session.query(User).filter_by(id=user_id).one()
+
+        newPal = Pal(
+            name=user.name,
+            user_id=pal.id,
+            pal_id=user.id,
+            image=user.picture
+            )
+
+        session.add(newPal)
+        session.commit()
+
         return redirect(url_for('showMyPals', user_id=user_id))
 
 
@@ -498,21 +497,10 @@ def fbLogin():
     return output
 
 
-@app.route('/gconnect', methods=['POST'])
-def googleLogin():
-    '''Executes google login using login_handler'''
-    output = login_handler.gconnect()
-    return output
-
-
 @app.route('/disconnect')
 def disconnect():
     '''Disconnects a user based on provide (FB or google)'''
     if 'provider' in login_session:
-        if login_session['provider'] == 'google':
-            logout_handler.gdisconnect()
-            del login_session['gplus_id']
-            del login_session['access_token']
         if login_session['provider'] == 'facebook':
             logout_handler.fbdisconnect()
             del login_session['facebook_id']
@@ -532,14 +520,6 @@ def disconnect():
 def fbLogout():
     '''Logout of HeyPal if FB was used to login'''
     output = logout_handler.fbdisconnect()
-    return output
-
-
-# DISCONNECT - Revoke a current user's token and reset their login_session
-@app.route('/gdisconnect')
-def googleLogout():
-    '''Logout of HeyPal if google was used to login'''
-    output = logout_handler.gdisconnect()
     return output
 
 

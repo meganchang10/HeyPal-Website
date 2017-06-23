@@ -50,9 +50,6 @@ def createActivity(request):
     newActivity = Activity(
         name=request.form['name'],
         location=request.form['location'],
-        venue_id=request.form['venue_id'],
-        lat=request.form['lat'],
-        lng=request.form['lng'],
         fullName=fullNameString,
         image=request.form['image'],
         description=request.form['description'],
@@ -66,6 +63,13 @@ def createActivity(request):
         tag_over_21=tag_over_21,
         tag_after_work=tag_after_work,
         )
+
+    if request.form['venue_id']:
+        newActivity.venue_id = request.form['venue_id']
+    if request.form['lat']:
+        newActivity.lat = request.form['lat']
+    if request.form['lng']:
+        newActivity.lng = request.form['lng']
 
     datetime = checkBox.checkDateTime(newActivity, request)
     newActivity.datetime = datetime
