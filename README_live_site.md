@@ -4,7 +4,9 @@
 
 For this project, I launched a virtual private web server through Amazon Lightwail. I used the Ubuntu computer operating system based on the Linux distribution, and an Apache web server to host my web application, HeyPal.
 
-You can access the final website at [http://ec2-52-15-196-144.us-east-2.compute.amazonaws.com/]. HeyPal is a social network that is actually designed to make you more social. It suggests fun local activities to you and takes the effort out of event planning. HeyPal provides you with awesome ideas, so you can focus on what matters, your pals! All you have to do is send the invite.
+HeyPal is a social network that is actually designed to make you more social. It suggests fun local activities to you and takes the effort out of event planning. HeyPal provides you with awesome ideas, so you can focus on what matters, your pals! All you have to do is send the invite.
+
+You can access the final website at [http://ec2-52-15-196-144.us-east-2.compute.amazonaws.com/]. The IP Address is 52.15.196.144
 
 ## Setup
 
@@ -193,7 +195,7 @@ You should see a (venv) at the start of the command line. This is how you know t
 
 (venv) student@ip-172-31-6-85:~$ 
 
-From inside the virtual environment, install all required packages using the requirements.txt found in the heypal git you just cloned. This requirements.txt file was created using the pip freeze command and lists all dependencies necessary to run HeyPal:
+From inside the virtual environment, install all required packages using the requirements.txt found in the heypal git you just cloned. This requirements.txt file was created using the pip freeze command and lists all dependencies necessary to run HeyPal. To see these dependencies, please view the requirements.txt file in the GitHub repository:
 
 (venv) student@ip-172-31-6-85:~$ `sudo apt-get install python-setuptools`
 (venv) student@ip-172-31-6-85:~$ `sudo apt-get install python-psycopg2`
