@@ -114,7 +114,7 @@ class Invite(Base):
     host = Column(Integer, ForeignKey('user.id'))
     guest = Column(Integer, ForeignKey('pal.id'))
     user = relationship(User, foreign_keys=[host])
-    pal = relationship(Pal, foreign_keys=[guest])
+    pal = relationship(User, foreign_keys=[guest])
 
     name = Column(String(80), nullable=False)
     description = Column(String(250))
