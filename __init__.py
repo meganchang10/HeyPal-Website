@@ -325,6 +325,30 @@ def sendInvite(creator, myActivity_id):
             'sendInvite.html', current=activity, pals=pals)
 
 
+@app.route(
+    '/heypal/<int:creator>/<int:invite_id>/delete/',
+    methods=["GET", "POST"])
+def deleteInvite(invite_id, creator):
+    '''Users can remove an activity from their My Activity page'''
+    # Authorization required
+    if login_session['user_id'] != creator:
+        flash("Only Authorized Users Can Access That Page")
+        return redirect("/")
+
+    deleteInvite = session.query(Invite).filter_by(
+        id=invite_id).one()
+
+    if request.method == "POST":
+        session.delete(deleteInvite)
+        session.commit()
+        flash("Invite Successfully Deleted: %s" % deleteInvite.name)
+        return redirect(url_for(
+            'showMyInvites', user_id=creator))
+    else:
+        return render_template(
+            "deleteInvite.html", current=deleteInvite)
+
+
 
 # JSON functions
 ###############################################################################

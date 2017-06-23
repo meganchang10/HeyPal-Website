@@ -40,4 +40,7 @@ def createInvite(activity, request, guest_id, invite_key):
     if request.form['description']:
         newInvite.message = request.form['description']
 
+    datetime = checkBox.checkDateTime(newInvite, request)
+    newInvite.datetime = datetime
+
     return newInvite
