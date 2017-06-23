@@ -78,7 +78,7 @@ def fbconnect():
     login_session['user_id'] = user_id
 
     output = ''
-    output += '<h1>Welcome, '
+    output += '<h1>Welcome to HeyPal, '
     output += login_session['username']
 
     output += '!</h1>'
@@ -87,6 +87,7 @@ def fbconnect():
     output += ''' " style = "width: 300px; height: 300px;
     border-radius: 150px;-webkit-border-radius: 150px;
     -moz-border-radius: 150px;"> '''
+    output += '<h4>A social media platform that suggests fun activities in your local area, so you can focus on what matters: your pals!</h4>'
 
     flash("Now logged in as %s" % login_session['username'])
     return output

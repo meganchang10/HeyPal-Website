@@ -12,6 +12,8 @@
 
 <body>
 
+<div id="result"></div>
+
 <!--FACEBOOK SIGN IN -->
 <script>
   window.fbAsyncInit = function() {
@@ -51,7 +53,7 @@
       success: function(result) {
         // Handle or verify the server response if necessary.
         if (result) {
-          $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+          $('#result').html(result + '</br>Redirecting...')
          setTimeout(function() {
           window.location.href = "/heypal";
          }, 4000);
