@@ -21,9 +21,9 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 # Create dummy user
-User1 = User(name="Megan Chang", email="meganchang10@gmail.com")
-session.add(User1)
-session.commit()
+#User1 = User(name="Megan Chang", email="meganchang10@gmail.com")
+#session.add(User1)
+#session.commit()
 
 lat = "34.40234809999999"
 lng = "-119.69934519999998"
